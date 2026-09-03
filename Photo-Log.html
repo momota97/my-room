@@ -48,9 +48,11 @@
         box-sizing: border-box;
     }
 
+    /* 改行防止 & 自動縮小の設定 */
     .title-card h1 {
         margin: 0;
-        font-size: 2em;
+        white-space: nowrap;
+        font-size: clamp(1.2em, 5vw, 2em);
     }
 
     /* フォトログリスト（homeの要素幅 max-width: 650px に統一） */
@@ -165,7 +167,7 @@
 
     /* 画像ラッパー */
     .photo-wrapper {
-        width: 65%;
+        width: 60%;
         border-radius: 16px;
         overflow: hidden;
         box-shadow: 0 4px 15px rgba(0,0,0,0.05);
@@ -188,7 +190,7 @@
     /* 共通吹き出しスタイル */
     .speech-bubble {
         position: absolute;
-        width: 45%;
+        width: 48%;
         background: rgba(255, 254, 255, 0.95);
         padding: 18px 20px;
         border-radius: 16px;
@@ -204,23 +206,25 @@
         margin: 0;
     }
 
+    /* 左画像／右上吹き出し（重なり位置のズレ調整） */
     .type-left .speech-bubble {
-        top: -15px;
+        top: 10px;
         right: 0;
     }
 
     .type-left .speech-bubble::after {
         content: '';
         position: absolute;
-        bottom: -10px;
-        left: 25px;
-        border-width: 12px 10px 0 0;
+        top: 20px;
+        left: -10px;
+        border-width: 8px 10px 8px 0;
         border-style: solid;
-        border-color: rgba(255, 254, 255, 0.95) transparent transparent transparent;
+        border-color: transparent rgba(255, 254, 255, 0.95) transparent transparent;
     }
 
+    /* 右画像／左下吹き出し（重なり位置のズレ調整） */
     .type-right .speech-bubble {
-        bottom: -15px;
+        bottom: 10px;
         left: 0;
     }
 
@@ -229,7 +233,7 @@
         position: absolute;
         bottom: 20px;
         right: -10px;
-        border-width: 10px 0 0 12px;
+        border-width: 8px 0 8px 10px;
         border-style: solid;
         border-color: transparent transparent transparent rgba(255, 254, 255, 0.95);
     }
@@ -240,7 +244,7 @@
     }
 
     .type-right-top .speech-bubble {
-        top: -15px;
+        top: 10px;
         left: 0;
     }
 
@@ -249,7 +253,7 @@
         position: absolute;
         top: 20px;
         right: -10px;
-        border-width: 10px 0 0 12px;
+        border-width: 8px 0 8px 10px;
         border-style: solid;
         border-color: transparent transparent transparent rgba(255, 254, 255, 0.95);
     }
@@ -275,18 +279,46 @@
         transform: scale(1.08) translateY(-2px);
     }
 
-    /* スマホ表示向けの調整 */
+    /* スマホ表示向けの調整（重なりを防ぎ、画像下へ配置） */
     @media (max-width: 600px) {
+        .photo-item.type-left,
+        .photo-item.type-right,
+        .photo-item.type-right-top {
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
         .photo-wrapper {
-            width: 75%;
+            width: 100%;
         }
+
         .speech-bubble {
-            width: 55%;
-            font-size: 0.75em;
-            padding: 12px 14px;
+            position: relative;
+            width: 100%;
+            top: auto !important;
+            bottom: auto !important;
+            left: auto !important;
+            right: auto !important;
+            font-size: 0.8em;
+            padding: 14px 16px;
         }
+
+        /* スマホ時の吹き出し矢印（上に配置） */
+        .type-left .speech-bubble::after,
+        .type-right .speech-bubble::after,
+        .type-right-top .speech-bubble::after {
+            top: -10px !important;
+            bottom: auto !important;
+            left: 50% !important;
+            right: auto !important;
+            transform: translateX(-50%);
+            border-width: 0 10px 10px 10px !important;
+            border-color: transparent transparent rgba(255, 254, 255, 0.95) transparent !important;
+        }
+
         .photo-item.type-double-with-bubble .speech-bubble {
-            width: 95%;
+            width: 100%;
         }
     }
 </style>
@@ -461,7 +493,7 @@
                     <img src="20260429_5.jpg" alt="お出かけ写真">
                 </div>
                 <div class="speech-bubble">
-                    💙🐳🌐🧢🧊🐬🌀🌊💎仁とまどかが並んでて幸💗🎀🩰🦑🌺🍧💕🌷🧁<br>
+                    💙🐳🌐🧢🧊🐬🌀🌊仁とまどかが並んでて幸💗🎀🩰🦑🌺💕🌷🧁<br>
                 </div>
             </div>
 
