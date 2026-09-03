@@ -62,6 +62,13 @@
         justify-content: center;
     }
 
+    /* スマホ表示時の設定（縦並びへ変換 & ワッペン調整） */
+    @media (max-width: 768px) {
+        .bottom-columns {
+            flex-direction: column;
+        }
+    }
+
     @media (max-width: 600px) {
         .wappen-deco {
             width: 50px !important;
@@ -227,13 +234,14 @@
         margin-bottom: 25px;
     }
 
-    /* カプセル風見出し */
+    /* カプセル風見出し（改行防止・サイズ可変設定） */
     .section-container h2 {
-        font-size: 1.3em;
+        font-size: clamp(0.95em, 4vw, 1.3em);
+        white-space: nowrap;
         margin: 0 auto 25px auto;
         text-align: center;
         display: inline-block;
-        padding: 8px 25px;
+        padding: 8px 20px;
         background: rgba(255, 254, 255, 0.9);
         border-radius: 20px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.03);
@@ -244,7 +252,7 @@
         text-align: left;
     }
 
-    /* 🤍 右下ワッペン装飾（元の位置・サイズに戻しています） */
+    /* 🤍 右下ワッペン装飾 */
     .wappen-deco {
         position: absolute;
         bottom: -20px;
@@ -687,7 +695,7 @@
 
                 <!-- イラスト2枚目 -->
                 <div class="gallery-item">
-                    <img src="madoka_nekomimi2.png" alt="まどかのイラスト2">
+                    <img src="madoka_nekomimi2.png" alt="まdoかのイラスト2">
                 </div>
 
                 <!-- イラスト3枚目 -->
