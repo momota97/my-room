@@ -48,7 +48,8 @@
 
     .title-card h1 {
         margin: 0;
-        font-size: 2.2em;
+        white-space: nowrap; /* 勝手な改行を防止 */
+        font-size: clamp(1.1em, 5vw, 2.2em); /* スマホ画面で自動リサイズ */
     }
 
     /* 2. 下部2カラムエリア */
@@ -64,6 +65,13 @@
     @media (max-width: 600px) {
         .bottom-columns {
             flex-direction: column;
+        }
+
+        /* スマホ時のワッペンサイズ指定 */
+        .wappen-deco {
+            width: 50px !important;
+            bottom: -15px !important;
+            right: 10px !important;
         }
     }
 
