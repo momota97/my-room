@@ -82,8 +82,11 @@
     }
 
     @media (max-width: 600px) {
-        .bottom-columns {
-            flex-direction: column;
+        .wappen-deco {
+            width: 80px;       /* 画像を小さくする */
+            bottom: -10px;     /* 位置の調整 */
+            right: -10px;
+            opacity: 0.6;      /* 少し透けさせて文字を見やすくする */
         }
     }
 
@@ -435,7 +438,7 @@
             <!-- 右カラム（自分の立ち絵・SD画像 ＋ 点滅アニメーション） -->
             <div class="right-col">
                 <div class="profile-img-container">
-                    <img src="hazime.png" class="pyoko-img" alt="自分のプロフィール画像">
+                    <img src="hazime.png" class="pyoko-img">
 
                     <!-- ✨ ♰ / ✧ 点滅アニメーション -->
                     <div class="kirakira-container">
@@ -532,15 +535,15 @@
             <div class="gallery-list">
                 
                 <div class="gallery-item">
-                    <img src="hazime_awaawa.png" alt="自分の作品1">
+                    <img src="hazime_awaawa.png">
                 </div>
 
                 <div class="gallery-item">
-                    <img src="hazime_guruguru.png" alt="自分の作品2">
+                    <img src="hazime_guruguru.png">
                 </div>
 
                 <div class="gallery-item">
-                    <img src="hazime_love.png" alt="自分の作品3">
+                    <img src="hazime_love.png">
                 </div>   
 
             </div>
