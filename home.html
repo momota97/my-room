@@ -50,7 +50,8 @@
 
     .welcome-card h1 {
         margin-top: 0;
-        font-size: 2.2em;
+        white-space: nowrap; /* 勝手な改行を防止 */
+        font-size: clamp(1.1em, 5vw, 2.2em); /* スマホ画面で自動リサイズ */
     }
 
     /* 3. 流れるポエム（marquee） */
@@ -360,12 +361,25 @@
         margin: 0;
     }
 
-    /* スマホなど画面が狭いときは縦並びにする調整 */
-    @media (max-width: 500px) {
+    /* スマホ表示時のサイズ・レイアウト調整 */
+    @media (max-width: 600px) {
         .banner-flex-box {
             flex-direction: column;
             text-align: center;
             gap: 12px;
+        }
+
+        /* ☁️ スマホ時に雲のサイズを小さく調整 */
+        .cloud1 {
+            width: 60px;
+            left: 0px;
+            bottom: 5px;
+        }
+
+        .cloud2 {
+            width: 60px;
+            right: 10px;
+            top: 0px;
         }
     }
 
