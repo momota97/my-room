@@ -39,8 +39,8 @@
         padding: 30px 20px;
         text-align: center;
         width: 100%;
-        max-width: 650px; /* homeに合わせて 650px に変更 */
-        margin-bottom: 25px; /* homeのカード余白に合わせて統一 */
+        max-width: 650px;
+        margin-bottom: 25px;
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         box-sizing: border-box;
@@ -49,6 +49,8 @@
     .title-card h1 {
         margin: 0;
         font-size: 2em;
+        white-space: nowrap;
+        font-size: clamp(1.2em, 5vw, 2em);
     }
 
     /* サムネイルグリッド (3列配置) */
@@ -57,7 +59,7 @@
         grid-template-columns: repeat(3, 1fr);
         gap: 20px;
         width: 100%;
-        max-width: 650px; /* homeに合わせて 650px に変更 */
+        max-width: 650px;
     }
 
     .gallery-item {
@@ -105,20 +107,19 @@
         height: 100%;
         background: rgba(0, 0, 0, 0.4);
         backdrop-filter: blur(4px);
-        display: flex;
+        display: none; /* 非表示時は要素自体を消去 */
         justify-content: center;
         align-items: center;
         z-index: 100;
         opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
         padding: 20px;
         box-sizing: border-box;
+        transition: opacity 0.3s ease;
     }
 
     .modal-overlay.active {
+        display: flex;
         opacity: 1;
-        visibility: visible;
     }
 
     /* モーダル本体 */
@@ -264,49 +265,49 @@
         <div class="gallery-grid">
             <div class="gallery-item" onclick="openModal('modal7')">
                 <div class="thumb-wrapper">
-                    <img src="20260811.jpg" alt="ブロマイド7">
+                    <img src="20260811.jpg" alt="">
                 </div>
                 <div class="item-date">2026/08/11</div>
             </div>
 
             <div class="gallery-item" onclick="openModal('modal6')">
                 <div class="thumb-wrapper">
-                    <img src="20260331.jpg" alt="ブロマイド6">
+                    <img src="20260331.jpg" alt="">
                 </div>
                 <div class="item-date">2026/03/31</div>
             </div>
 
             <div class="gallery-item" onclick="openModal('modal5')">
                 <div class="thumb-wrapper">
-                    <img src="20251230.jpg" alt="ブロマイド5">
+                    <img src="20251230.jpg" alt="">
                 </div>
                 <div class="item-date">2025/12/30</div>
             </div>
 
             <div class="gallery-item" onclick="openModal('modal4')">
                 <div class="thumb-wrapper">
-                    <img src="20250812.jpg" alt="ブロマイド4">
+                    <img src="20250812.jpg" alt="">
                 </div>
                 <div class="item-date">2025/08/12</div>
             </div>
 
             <div class="gallery-item" onclick="openModal('modal3')">
                 <div class="thumb-wrapper">
-                    <img src="20250304.jpg" alt="ブロマイド3">
+                    <img src="20250304.jpg" alt="">
                 </div>
                 <div class="item-date">2025/03/04</div>
             </div>
 
             <div class="gallery-item" onclick="openModal('modal2')">
                 <div class="thumb-wrapper">
-                    <img src="20240716.jpg" alt="ブロマイド2">
+                    <img src="20240716.jpg" alt="">
                 </div>
                 <div class="item-date">2024/07/16</div>
             </div>
 
             <div class="gallery-item" onclick="openModal('modal1')">
                 <div class="thumb-wrapper">
-                    <img src="20240220.jpg" alt="ブロマイド1">
+                    <img src="20240220.jpg" alt="">
                 </div>
                 <div class="item-date">2024/02/20</div>
             </div>
@@ -322,7 +323,7 @@
         <div class="modal-content">
             <div class="close-btn" onclick="closeModal('modal7')">✕</div>
             <div class="modal-photo-wrapper">
-                <img src="20260811_2.jpg" alt="拡大写真7">
+                <img src="20260811_2.jpg" alt="">
             </div>
             <div class="modal-text">
                 <strong>ローソン・ミニストッププリント✨</strong><br>
@@ -348,7 +349,7 @@
         <div class="modal-content">
             <div class="close-btn" onclick="closeModal('modal6')">✕</div>
             <div class="modal-photo-wrapper">
-                <img src="20260331_2.jpg" alt="拡大写真6">
+                <img src="20260331_2.jpg" alt="">
             </div>
             <div class="modal-text">
                 <strong>ファミマプリント✨</strong><br>
@@ -374,7 +375,7 @@
         <div class="modal-content">
             <div class="close-btn" onclick="closeModal('modal5')">✕</div>
             <div class="modal-photo-wrapper">
-                <img src="20251230_2.jpg" alt="拡大写真5">
+                <img src="20251230_2.jpg" alt="">
             </div>
             <div class="modal-text">
                 <strong>ローソンプリント✨</strong><br>
@@ -408,7 +409,7 @@
         <div class="modal-content">
             <div class="close-btn" onclick="closeModal('modal4')">✕</div>
             <div class="modal-photo-wrapper">
-                <img src="20250812_2.jpg" alt="拡大写真4">
+                <img src="20250812_2.jpg" alt="">
             </div>
             <div class="modal-text">
                 <strong>初のファミマプリント✨</strong><br>
@@ -433,7 +434,7 @@
         <div class="modal-content">
             <div class="close-btn" onclick="closeModal('modal3')">✕</div>
             <div class="modal-photo-wrapper">
-                <img src="20250304_2.jpg" alt="拡大写真3">
+                <img src="20250304_2.jpg" alt="">
             </div>
             <div class="modal-text">
                 <strong>ローソンプリント✨</strong><br>
@@ -457,7 +458,7 @@
         <div class="modal-content">
             <div class="close-btn" onclick="closeModal('modal2')">✕</div>
             <div class="modal-photo-wrapper">
-                <img src="20240716_2.jpg" alt="拡大写真2">
+                <img src="20240716_2.jpg" alt="">
             </div>
             <div class="modal-text">
                 <strong>ローソンプリント✨</strong><br>
@@ -473,7 +474,7 @@
         <div class="modal-content">
             <div class="close-btn" onclick="closeModal('modal1')">✕</div>
             <div class="modal-photo-wrapper">
-                <img src="20240220_2.jpg" alt="拡大写真1">
+                <img src="20240220_2.jpg" alt="">
             </div>
             <div class="modal-text">
                 <strong>初のローソンプリント✨</strong><br>
@@ -498,7 +499,11 @@
     <script>
         function openModal(id) {
             const modal = document.getElementById(id);
-            modal.classList.add('active');
+            modal.style.display = 'flex';
+            
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
             
             if (window.twttr && window.twttr.widgets) {
                 window.twttr.widgets.load(modal);
@@ -509,11 +514,15 @@
             const modal = document.getElementById(id);
             modal.classList.remove('active');
 
-            const tweetContainers = modal.querySelectorAll('.tweet-container');
-            tweetContainers.forEach(container => {
-                const iframes = container.querySelectorAll('iframe');
-                iframes.forEach(iframe => iframe.remove());
-            });
+            setTimeout(() => {
+                modal.style.display = 'none';
+
+                const tweetContainers = modal.querySelectorAll('.tweet-container');
+                tweetContainers.forEach(container => {
+                    const iframes = container.querySelectorAll('iframe');
+                    iframes.forEach(iframe => iframe.remove());
+                });
+            }, 300);
         }
 
         function closeModalOnOverlay(event, id) {
