@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bromide Log - Momota's Room</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
+
+<style>
+    /* 全体設定 */
+    body {
+        font-family: 'Hachi Maru Pop', cursive, sans-serif;
+        color: #ff8fc5;
+        margin: 0;
+        min-height: 100vh;
+        background-color: #fff0f9;
+        background-image: radial-gradient(#ffffff 15%, transparent 15%),
+                          radial-gradient(#ffffff 15%, transparent 15%);
+        background-position: 0 0, 20px 20px;
+        background-size: 40px 40px;
+    }
+
+    .site-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* タイトル */
+    .title-card {
+        background: rgba(255, 254, 255, 0.9);
+        padding: 30px 20px;
+        text-align: center;
+        width: 100%;
+        max-width: 650px; /* homeに合わせて 650px に変更 */
+        margin-bottom: 25px; /* homeのカード余白に合わせて統一 */
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        box-sizing: border-box;
+    }
+
+    .title-card h1 {
+        margin: 0;
+        font-size: 2em;
+    }
+
+    /* サムネイルグリッド (3列配置) */
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        width: 100%;
+        max-width: 650px; /* homeに合わせて 650px に変更 */
+    }
+
+    .gallery-item {
+        background: rgba(255, 254, 255, 0.9);
+        border-radius: 12px;
+        padding: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .gallery-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(255, 143, 197, 0.2);
+    }
+
+    .thumb-wrapper {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: #fff;
+        margin-bottom: 8px;
+    }
+
+    .thumb-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .item-date {
+        font-size: 0.85em;
+        font-weight: bold;
+        color: #ff8fc5;
+    }
+
+    /* モーダルウィンドウ（オーバーレイ） */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(4px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 100;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* モーダル本体 */
+    .modal-content {
+        position: relative;
+        background: rgba(255, 254, 255, 0.98);
+        width: 100%;
+        max-width: 480px;
+        max-height: 85vh;
+        overflow-y: auto;
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        box-sizing: border-box;
+        display: block;
+        transform: scale(0.9);
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        margin: auto;
+
+        scrollbar-width: thin;
+        scrollbar-color: #ffb6c1 #fff0f9;
+    }
+
+    .modal-overlay.active .modal-content {
+        transform: scale(1);
+    }
+
+    .modal-content::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .modal-content::-webkit-scrollbar-track {
+        background: #fff0f9;
+        border-radius: 10px;
+        margin: 15px 0;
+    }
+
+    .modal-content::-webkit-scrollbar-thumb {
+        background: #ffb6c1;
+        border-radius: 10px;
+    }
+
+    .modal-content::-webkit-scrollbar-thumb:hover {
+        background: #ff8fc5;
+    }
+
+    /* × 閉じるボタン */
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 38px;
+        height: 38px;
+        background: #ff8fc5;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2em;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        transition: background-color 0.2s, transform 0.2s;
+        user-select: none;
+        z-index: 10;
+    }
+
+    .close-btn:hover {
+        background: #ffb6c1;
+        transform: scale(1.1);
+    }
+
+    .modal-photo-wrapper {
+        width: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        margin-bottom: 20px;
+        margin-top: 15px;
+        flex-shrink: 0;
+    }
+
+    .modal-photo-wrapper img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .modal-text {
+        width: 100%;
+        color: #666;
+        font-size: 0.9em;
+        line-height: 1.6;
+        text-align: left;
+    }
+
+    .tweet-container {
+        margin-top: 15px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .back-btn {
+        display: block;
+        margin: 40px auto 0;
+        max-width: 140px;
+        text-align: center;
+        padding: 8px 15px;
+        background-color: #ff8fc5;
+        color: white;
+        text-decoration: none;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.85em;
+        transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.2s;
+    }
+
+    .back-btn:hover {
+        background-color: #ffb6c1;
+        transform: scale(1.08) translateY(-2px);
+    }
+
+    @media (max-width: 600px) {
+        .gallery-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <div class="site-container">
+
+        <div class="title-card">
+            <h1>˙˚ʚ Bromide Log ɞ˚˙</h1>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-item" onclick="openModal('modal7')">
+                <div class="thumb-wrapper">
+                    <img src="20260811.jpg" alt="ブロマイド7">
+                </div>
+                <div class="item-date">2026/08/11</div>
+            </div>
+
+            <div class="gallery-item" onclick="openModal('modal6')">
+                <div class="thumb-wrapper">
+                    <img src="20260331.jpg" alt="ブロマイド6">
+                </div>
+                <div class="item-date">2026/03/31</div>
+            </div>
+
+            <div class="gallery-item" onclick="openModal('modal5')">
+                <div class="thumb-wrapper">
+                    <img src="20251230.jpg" alt="ブロマイド5">
+                </div>
+                <div class="item-date">2025/12/30</div>
+            </div>
+
+            <div class="gallery-item" onclick="openModal('modal4')">
+                <div class="thumb-wrapper">
+                    <img src="20250812.jpg" alt="ブロマイド4">
+                </div>
+                <div class="item-date">2025/08/12</div>
+            </div>
+
+            <div class="gallery-item" onclick="openModal('modal3')">
+                <div class="thumb-wrapper">
+                    <img src="20250304.jpg" alt="ブロマイド3">
+                </div>
+                <div class="item-date">2025/03/04</div>
+            </div>
+
+            <div class="gallery-item" onclick="openModal('modal2')">
+                <div class="thumb-wrapper">
+                    <img src="20240716.jpg" alt="ブロマイド2">
+                </div>
+                <div class="item-date">2024/07/16</div>
+            </div>
+
+            <div class="gallery-item" onclick="openModal('modal1')">
+                <div class="thumb-wrapper">
+                    <img src="20240220.jpg" alt="ブロマイド1">
+                </div>
+                <div class="item-date">2024/02/20</div>
+            </div>
+
+        </div>
+
+        <a href="home.html" class="back-btn">← もどる</a>
+
+    </div>
+
+    <!-- モーダル7 -->
+    <div id="modal7" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal7')">
+        <div class="modal-content">
+            <div class="close-btn" onclick="closeModal('modal7')">✕</div>
+            <div class="modal-photo-wrapper">
+                <img src="20260811_2.jpg" alt="拡大写真7">
+            </div>
+            <div class="modal-text">
+                <strong>ローソン・ミニストッププリント✨</strong><br>
+                <br>
+                テーマは「花火大会当日の浴衣姿」<br>
+                まどか恰好よすぎないか？ メロメロしてしまう…<br>
+                たこ焼き食べてるけど、器はこっちに持たせてるんだよね🐙<br>
+                それで全部食べ切れなくて残飯処理させられるんだよね。<br>
+                けど、それもこれも全部誠一と健三がやるんでしょう。<br>
+                つけ入るスキは、ない😭
+
+                <div class="tweet-container">
+                    <blockquote class="twitter-tweet" data-media-max-width="560">
+                        <a href="https://x.com/hundrednote100/status/2091359777226199406?s=20">公式Xの告知を読み込み中...</a>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル6 -->
+    <div id="modal6" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal6')">
+        <div class="modal-content">
+            <div class="close-btn" onclick="closeModal('modal6')">✕</div>
+            <div class="modal-photo-wrapper">
+                <img src="20260331_2.jpg" alt="拡大写真6">
+            </div>
+            <div class="modal-text">
+                <strong>ファミマプリント✨</strong><br>
+                <br>
+                テーマは「もしも高校生だったら」<br>
+                シナリオ良かったな…素悪憂帝硫…👊<br>
+                センター分けじゃない健三好き👏<br>
+                <br>
+                この髪型のときいつも疑問に思うのだが<br>
+                まどかの形状記憶合金アホ毛はどう鎮めているんですか？<br>
+
+                <div class="tweet-container">
+                    <blockquote class="twitter-tweet" data-media-max-width="560">
+                        <a href="https://x.com/hundrednote100/status/2047873889829851153?s=20">公式Xの告知を読み込み中...</a>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル5 -->
+    <div id="modal5" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal5')">
+        <div class="modal-content">
+            <div class="close-btn" onclick="closeModal('modal5')">✕</div>
+            <div class="modal-photo-wrapper">
+                <img src="20251230_2.jpg" alt="拡大写真5">
+            </div>
+            <div class="modal-text">
+                <strong>ローソンプリント✨</strong><br>
+                <br>
+                テーマは「タロット」<br>
+                タロットモチーフの衣装美麗すぎる。<br>
+                服の裏地に宇宙あってもうこれアルティメットまどかだろ👼<br>
+                動く気なさそうな衣装すぎてまどからしい。<br>
+                誠一と健三モチーフのもふもふいて<br>
+                記録者大好きなんだなって🤦‍♂️<br>
+                <br>
+                まどかの衣装、座ったらスカートが円形になって<br>
+                月っぽく見えるんじゃないかと思っている🌕<br>
+                <br>                
+                あと、仁とまどかのポーズが若干対になってて激萌え🤜🤛<br>
+
+                <div class="tweet-container">
+                    <blockquote class="twitter-tweet" data-media-max-width="560">
+                        <a href="https://x.com/hundrednote100/status/2003299524039811230?s=20">公式Xの告知を読み込み中...</a>
+                    </blockquote>
+                    <blockquote class="twitter-tweet" data-media-max-width="560">
+                        <a href="https://x.com/hundrednote100/status/1994241593239560554?s=20">公式Xの告知を読み込み中...</a>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル4 -->
+    <div id="modal4" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal4')">
+        <div class="modal-content">
+            <div class="close-btn" onclick="closeModal('modal4')">✕</div>
+            <div class="modal-photo-wrapper">
+                <img src="20250812_2.jpg" alt="拡大写真4">
+            </div>
+            <div class="modal-text">
+                <strong>初のファミマプリント✨</strong><br>
+                <br>
+                テーマは「メイド」<br>
+                スワテはチャイナメイドでかわいい🎀<br>
+                misa先生曰くまどかは短めのスカートらしくて爆発💥<br>
+                <br>
+                舌ペロってしてる💢<br>
+                軽率に舌ペロをするな👐<br>
+                <div class="tweet-container">
+                    <blockquote class="twitter-tweet" data-media-max-width="560">
+                        <a href="https://x.com/hundrednote100/status/1959089071692947642?s=20">公式Xの告知を読み込み中...</a>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル3 -->
+    <div id="modal3" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal3')">
+        <div class="modal-content">
+            <div class="close-btn" onclick="closeModal('modal3')">✕</div>
+            <div class="modal-photo-wrapper">
+                <img src="20250304_2.jpg" alt="拡大写真3">
+            </div>
+            <div class="modal-text">
+                <strong>ローソンプリント✨</strong><br>
+                <br>
+                中華風の衣装！<br>
+                これはスワロウテイルの専売特許すぎる💕<br>
+                羽衣のようなファーを羽織ってるの格好いい…<br>
+                ハーフアップのヘアアレンジも似合ってるね😘<br>
+
+                <div class="tweet-container">
+                    <blockquote class="twitter-tweet" data-media-max-width="560">
+                        <a href="https://x.com/hundrednote100/status/1908082455091032202?s=20">公式Xの告知を読み込み中...</a>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル2 -->
+    <div id="modal2" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal2')">
+        <div class="modal-content">
+            <div class="close-btn" onclick="closeModal('modal2')">✕</div>
+            <div class="modal-photo-wrapper">
+                <img src="20240716_2.jpg" alt="拡大写真2">
+            </div>
+            <div class="modal-text">
+                <strong>ローソンプリント✨</strong><br>
+                <br>
+                まどかって頬膨らませがちでかわいいね…<br>
+                ちゃんと三人の好物があって良い🥪🥣🍙
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル1 -->
+    <div id="modal1" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal1')">
+        <div class="modal-content">
+            <div class="close-btn" onclick="closeModal('modal1')">✕</div>
+            <div class="modal-photo-wrapper">
+                <img src="20240220_2.jpg" alt="拡大写真1">
+            </div>
+            <div class="modal-text">
+                <strong>初のローソンプリント✨</strong><br>
+                <br>
+                まどかが美少女すぎて恋しまくってる💕<br>
+                いつ見てもドキドキする…💓<br>
+                <br>
+                微笑の表情がいい！ 体が薄そうでいい！<br>
+                カップの持ち方好き！髪の毛ふわふわでかわいいねえ😘<br>
+
+                <div class="tweet-container">
+                    <blockquote class="twitter-tweet" data-media-max-width="560">
+                        <a href="https://x.com/hundrednote100/status/1771839467529347292?s=20">公式Xの告知を読み込み中...</a>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+    <script>
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.add('active');
+            
+            if (window.twttr && window.twttr.widgets) {
+                window.twttr.widgets.load(modal);
+            }
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.remove('active');
+
+            const tweetContainers = modal.querySelectorAll('.tweet-container');
+            tweetContainers.forEach(container => {
+                const iframes = container.querySelectorAll('iframe');
+                iframes.forEach(iframe => iframe.remove());
+            });
+        }
+
+        function closeModalOnOverlay(event, id) {
+            if (event.target === event.currentTarget) {
+                closeModal(id);
+            }
+        }
+    </script>
+
+</body>
+</html>

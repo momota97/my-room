@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About My Favorite - Momota's Room</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
+
+<style>
+    /* 全体設定 */
+    body {
+        font-family: 'Hachi Maru Pop', cursive, sans-serif;
+        color: #ff8fc5;
+        margin: 0;
+        min-height: 100vh;
+        background-color: #fff0f9;
+        background-image: radial-gradient(#ffffff 15%, transparent 15%),
+                          radial-gradient(#ffffff 15%, transparent 15%);
+        background-position: 0 0, 20px 20px;
+        background-size: 40px 40px;
+    }
+
+    .site-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-x: hidden; /* 右側へのはみ出しによる不要な横スクロールを防ぐ */
+    }
+
+    /* 1. タイトルエリア */
+    .title-card {
+        background: rgba(255, 254, 255, 0.9);
+        padding: 40px 30px;
+        text-align: center;
+        width: 100%;
+        max-width: 650px;
+        margin-bottom: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        box-sizing: border-box;
+    }
+
+    .title-card h1 {
+        margin: 0;
+        font-size: 2.2em;
+    }
+
+    /* 2. 下部2カラムエリア */
+    .bottom-columns {
+        display: flex;
+        gap: 20px;
+        width: 100%;
+        max-width: 650px;
+        justify-content: center;
+    }
+
+    @media (max-width: 600px) {
+        .bottom-columns {
+            flex-direction: column;
+        }
+    }
+
+    .left-col, .right-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* 共通カードスタイル */
+    .info-card {
+        position: relative; /* 重ねる装飾の基準位置設定 */
+        background: rgba(255, 254, 255, 0.9);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        box-sizing: border-box;
+    }
+
+    /* 🎀 右上リボン装飾 */
+    .ribbon-deco {
+        position: absolute;
+        top: -5px;
+        right: -25px;
+        width: 100px;
+        height: auto;
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    /* プロフィール表 */
+    .profile-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .profile-table th, .profile-table td {
+        padding: 8px 4px;
+        border-bottom: 1px dashed #ffe0ef;
+        font-size: 0.85em;
+    }
+    .profile-table th {
+        width: 35%;
+        color: #ff8fc5;
+        text-align: left;
+    }
+    .profile-table td {
+        color: #666;
+    }
+
+    /* 吹き出し風カード */
+    .speech-card {
+        position: relative;
+        background: rgba(255, 254, 255, 0.9);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        box-sizing: border-box;
+        color: #ff8fc5;
+        font-size: 0.85em;
+        line-height: 1.5;
+    }
+    .speech-card::after {
+        content: '';
+        position: absolute;
+        right: -12px;
+        top: 25px;
+        border-width: 8px 0 8px 12px;
+        border-style: solid;
+        border-color: transparent transparent transparent rgba(255, 254, 255, 0.9);
+    }
+
+    /* 右側：画像エリア（アニメーション枠） */
+    .profile-img-container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 250px;
+        overflow: visible; 
+        padding-top: 5px; 
+        box-sizing: border-box;
+    }
+
+    /* ぴょこぴょこ呼吸する画像 */
+    .pyoko-img {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        display: block;
+        transform-origin: bottom center;
+        animation: pyoko-breath 1.8s steps(1, end) infinite;
+        position: relative;
+        z-index: 1;
+    }
+
+    @keyframes pyoko-breath {
+        0% { transform: scale(1, 1); }
+        50% { transform: scale(0.97, 1.05); }
+        100% { transform: scale(1, 1); }
+    }
+
+    /* 💗✨ 下から上へ一定スピードで流れるアニメーション要素 */
+    .floating-item {
+        position: absolute;
+        bottom: -20px;
+        color: #ff8fc5;
+        z-index: 2;
+        pointer-events: none;
+        user-select: none;
+        opacity: 0;
+        animation: float-up 3.5s infinite linear;
+    }
+
+    /* 左側ゾーン */
+    .f-item1 { left: 3%;  font-size: 1.4em; animation-delay: 0s; }
+    .f-item2 { left: 18%; font-size: 1.1em; animation-delay: 1.5s; }
+    .f-item3 { left: 8%;  font-size: 1.6em; animation-delay: 2.5s; }
+
+    /* 右側ゾーン */
+    .f-item4 { left: 78%; font-size: 1.2em; animation-delay: 0.8s; }
+    .f-item5 { left: 90%; font-size: 1.5em; animation-delay: 2.0s; }
+    .f-item6 { left: 82%; font-size: 1.0em; animation-delay: 3.1s; }
+
+    /* 一定速度でまっすぐスーッと上昇するアニメーション */
+    @keyframes float-up {
+        0% {
+            transform: translateY(0);
+            opacity: 0;
+        }
+        15% {
+            opacity: 0.85;
+        }
+        85% {
+            opacity: 0.85;
+        }
+        100% {
+            transform: translateY(-260px);
+            opacity: 0;
+        }
+    }
+
+    /* 🌸 独立セクション共通コンテナ */
+    .section-container {
+        width: 100%;
+        max-width: 650px;
+        margin-top: 35px;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    /* 上の区切り点線 */
+    .section-divider {
+        width: 100%;
+        border-top: 2px dashed #ff8fc5;
+        margin-bottom: 25px;
+    }
+
+    /* カプセル風見出し */
+    .section-container h2 {
+        font-size: 1.3em;
+        margin: 0 auto 25px auto;
+        text-align: center;
+        display: inline-block;
+        padding: 8px 25px;
+        background: rgba(255, 254, 255, 0.9);
+        border-radius: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        color: #ff8fc5;
+    }
+
+    .love-card {
+        text-align: left;
+    }
+
+    /* 🤍 右下ワッペン装飾（元の位置・サイズに戻しています） */
+    .wappen-deco {
+        position: absolute;
+        bottom: -20px;
+        right: -15px;
+        width: 130px;
+        height: auto;
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    /* かわいいポイントのリスト */
+    .love-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 15px 0;
+    }
+
+    .love-list li {
+        position: relative;
+        padding-left: 22px;
+        margin-bottom: 10px;
+        font-size: 0.85em;
+        line-height: 1.6;
+        color: #666;
+    }
+
+    .love-list li::before {
+        content: '🎀';
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-size: 0.85em;
+    }
+
+    .love-list li strong {
+        color: #ff8fc5;
+    }
+
+    /* フリー語りスペース */
+    .love-comment {
+        padding-top: 15px;
+        border-top: 1px dashed #ffe0ef;
+        color: #666;
+        font-size: 0.85em;
+        line-height: 1.7;
+    }
+
+    .love-comment p {
+        margin: 0;
+    }
+
+    /* 🎵 イメージソング用スタイル */
+    .song-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .song-box {
+        background: #fff8fc;
+        padding: 15px 20px;
+        border-radius: 10px;
+        border: 1px solid #ffe0ef;
+        font-size: 0.85em;
+        color: #666;
+        line-height: 1.7;
+    }
+
+    .song-name {
+        color: #ff8fc5;
+        font-weight: bold;
+        font-size: 1.05em;
+    }
+
+    /* 📺 動画／公式ポスト用スタイル */
+    .scene-list {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .scene-item {
+        background: #fff8fc;
+        padding: 18px;
+        border-radius: 12px;
+        border: 1px solid #ffe0ef;
+    }
+
+    .scene-title {
+        font-weight: bold;
+        color: #ff8fc5;
+        font-size: 0.9em;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    /* YouTube埋め込みレスポンシブ枠 */
+    .video-responsive {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .video-responsive iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+
+    /* サムネイル＋リンクカード風スタイル */
+    .thumb-card {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        text-decoration: none;
+        background: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1.5px solid #ffe0ef;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .thumb-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(255, 143, 197, 0.2);
+    }
+
+    .thumb-card img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .thumb-card-text {
+        padding: 10px 12px;
+        color: #ff8fc5;
+        font-size: 0.8em;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .scene-desc {
+        margin-top: 10px;
+        font-size: 0.8em;
+        color: #666;
+        line-height: 1.5;
+    }
+
+    /* ギャラリー全体コメント枠 */
+    .gallery-intro-card {
+        background: rgba(255, 254, 255, 0.9);
+        border-radius: 12px;
+        padding: 18px 20px;
+        font-size: 0.85em;
+        color: #666;
+        line-height: 1.7;
+        text-align: left;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        box-sizing: border-box;
+        margin-bottom: 25px;
+    }
+
+    .gallery-intro-card p {
+        margin: 0;
+    }
+
+    /* ギャラリー縦並びエリア */
+    .gallery-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        width: 100%;
+    }
+
+    .gallery-item {
+        width: 100%;
+        max-width: 580px;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 12px;
+    }
+
+    /* もどるボタン */
+    .back-btn {
+        display: block;
+        margin: 35px auto 0;
+        max-width: 140px;
+        text-align: center;
+        padding: 8px 15px;
+        background-color: #ff8fc5;
+        color: white;
+        text-decoration: none;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.85em;
+        transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.2s;
+    }
+    .back-btn:hover {
+        background-color: #ffb6c1;
+        transform: scale(1.08) translateY(-2px);
+    }
+</style>
+</head>
+<body>
+    <div class="site-container">
+
+        <!-- 1. タイトルエリア -->
+        <div class="title-card">
+            <h1>˙˚ʚ About My Favorite ɞ˚˙</h1>
+        </div>
+
+        <!-- 2. 下部2カラムエリア -->
+        <div class="bottom-columns">
+
+            <!-- 左カラム（プロフ ＋ 吹き出し） -->
+            <div class="left-col">
+                <!-- 推しのプロフ -->
+                <div class="info-card">
+                    <!-- 🎀 右上リボン画像 -->
+                    <img src="ornament_2.png" class="ribbon-deco" alt="リボン">
+
+                    <table class="profile-table">
+                        <tr>
+                            <th>名前</th>
+                            <td><ruby>恵美<rt>えみ</rt></ruby> まどか</td>
+                        </tr>
+                        <tr>
+                            <th>誕生日</th>
+                            <td>11月8日</td>
+                        </tr>
+                        <tr>
+                            <th>血液型</th>
+                            <td>AB型</td>
+                        </tr>
+                        <tr>
+                            <th>好きなもの</th>
+                            <td>二度寝</td>
+                        </tr>
+                        <tr>
+                            <th>嫌いなもの</th>
+                            <td>鏡 / 誠一の説教</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- 台詞の吹き出し -->
+                <div class="speech-card">
+                    だって仕事したくないんだもーん<br>
+                </div>
+            </div>
+
+            <!-- 右カラム（推しの画像 ＋ 左右から一定速度で昇るアニメーション） -->
+            <div class="right-col">
+                <div class="profile-img-container">
+                    <!-- 左側のハート＆キラキラ -->
+                    <span class="floating-item f-item1">♡</span>
+                    <span class="floating-item f-item2">✧</span>
+                    <span class="floating-item f-item3">♡</span>
+
+                    <!-- 右側のハート＆キラキラ -->
+                    <span class="floating-item f-item4">✧</span>
+                    <span class="floating-item f-item5">♡</span>
+                    <span class="floating-item f-item6">✧</span>
+
+                    <img src="madoka.png" class="pyoko-img" alt="推しの画像">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 💖 2.5 Cute Point エリア -->
+        <div class="section-container">
+            <div class="section-divider"></div>
+
+            <h2>₊˚✧꒰ Cute Point ꒱✧˚₊</h2>
+
+            <div class="info-card love-card">
+                <!-- 🤍 右下ワッペン画像 -->
+                <img src="ornament_1.png" class="wappen-deco" alt="ワッペン">
+
+                <ul class="love-list">
+                    <li><strong>天使みたいな見た目：</strong> 華奢で色白な銀髪銀目！可憐で儚げな美少女にしか見えないのに、実は22歳男性で超毒舌なギャップが最高すぎる…👼 ぴょこんと生えてるアホ毛もかわいい💞</li>
+                    <li><strong>圧倒的ぐーたら探偵：</strong> 三度の飯より寝ることが大好きな超・怠け者。斜に構えたワガママなところも愛おしい💤</li>
+                    <li><strong>お世話され上手：</strong> 誠一に小言を言われ怒られつつ甘やかされ、健三には全力で崇め奉られて甘やかされている愛され力…✨ 甘いお菓子🧁と美味しい紅茶☕を飲んですくすく育ってね…💗</li>
+                </ul>
+
+                <div class="love-comment">
+                    <p>
+                        存在がかわいい！ 怒った時とか不機嫌なときにぷくって頬を膨らませるのがあざとすぎる😤<br>
+                        <br>
+                        誠一🧸と健三🐇をイメージしたぬいぐるみがベッドの近くに落ちてたり、<br>
+                        たまに触って遊んでるところが記録者大好きなんだろうなってわかって尊い…<br>
+                        <br>
+                        もっとたくさんかわいいお洋服を着てほしいな～🩰<br>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🎵 2.6 Image Song エリア（独立カード） -->
+        <div class="section-container">
+            <div class="section-divider"></div>
+
+            <h2>₊˚✧꒰ Image Song ꒱✧˚₊</h2>
+
+            <div class="info-card love-card">
+                <div class="song-list">
+                    <div class="song-box">
+                        ♪：<span class="song-name">「ワールドイズマイン」</span> / ryo<br>
+                        <br>
+                        世界で一番おひめさま♡ CPK! Remixも好き👑
+                    </div>
+                    
+                    <div class="song-box">
+                        ♪：<span class="song-name">「グリズリーに襲われたら♡」</span> / 神宿<br>
+                        <br>
+                        パジャマだって駆けつけてね♡
+                    </div>
+
+                    <div class="song-box">
+                        ♪：<span class="song-name">「ボイドロイド」</span> / r-906<br>
+                        <br>
+                        詞が無かったら届かない 詞があっても届かない
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📺 2.7 Check! Cute Scenes エリア（独立カード＋埋め込み動画） -->
+        <div class="section-container">
+            <div class="section-divider"></div>
+
+            <h2>₊˚✧꒰ Check! Cute Scenes ꒱✧˚₊</h2>
+
+            <div class="info-card love-card">
+                <div class="scene-list">
+
+                    <!-- シーン1：YouTube動画 -->
+                    <div class="scene-item">
+                        <div class="scene-title">🎬 YouTubeで見るかわいいまどか ①</div>
+                        
+                        <div class="video-responsive">
+                            <iframe src="https://www.youtube.com/embed/Narw1snAMHI?si=w-TY84c4GSLPGJdV" allowfullscreen></iframe>
+                        </div>
+
+                        <div class="scene-desc">
+                            ごめん寝のシーンがめっちゃかわいい😴
+                        </div>
+                    </div>
+
+                    <!-- シーン2：YouTube動画 -->
+                    <div class="scene-item">
+                        <div class="scene-title">🎬 YouTubeで見るかわいいまどか ②</div>
+                        
+                        <div class="video-responsive">
+                            <iframe src="https://www.youtube.com/embed/xlohaiCU5jQ?si=HDteW3rTPWzbPytK" allowfullscreen></iframe>
+                        </div>
+
+                        <div class="scene-desc">
+                            「誠一が免許取ったのは僕のためだもんね」って言ってるまどかがかわいい🚗<br>
+                            3人が仲良しでによによしてしまう🤭<br>
+                        </div>
+                    </div>
+
+                    <!-- シーン3：X (Twitter) やその他の画像付きリンク -->
+                    <div class="scene-item">
+                        <div class="scene-title">💬 公式X (Twitter) のおすすめポスト</div>
+                        
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/hundrednote100/status/2018142433029345375?s=20"></a>
+                        </blockquote>
+                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+                        <div class="scene-desc">
+                            ツインテールの日のまどか🎀<br>
+                            いつもと違う白いパジャマでかわいい🤍<br>
+                        </div>
+                    </div>
+
+                    <!-- シーン4：X (Twitter) やその他の画像付きリンク -->
+                    <div class="scene-item">
+                        <div class="scene-title">💬 公式X (Twitter) のおすすめポスト</div>
+                        
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/hundrednote100/status/1847789831654691258?s=20"></a>
+                        </blockquote>
+                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+                        <div class="scene-desc">
+                            かわいいまどかがいっぱい…🥳<br>
+                            健三にはこれからも頑張ってほしい🤝<br>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. ギャラリーエリア -->
+        <div class="section-container">
+            <div class="section-divider"></div>
+
+            <h2>₊˚✧꒰ Gallery ꒱✧˚₊</h2>
+
+            <!-- 💬 タイトルの下・画像の上に置く枠線なしのコメント枠 -->
+            <div class="gallery-intro-card">
+                <p>
+                    先生の水色ベースの銀髪＋水色の瞳も好きだけど、<br>
+                    公式の灰色(紫色)ベースの銀髪＋紫色の瞳の銀髪も好き…💕<br>
+                    <br>
+                    小説は銀色に輝いて見える淡い色をした髪に、光の加減で銀色みを帯びている黒い瞳👀<br>
+                    <br>
+                    ウルフっぽくするか、ミディアムショートにするかも悩みがち😵<br>
+                    どれも好きだから描くとき迷う💦<br>
+                </p>
+            </div>
+
+            <!-- 画像一覧 -->
+            <div class="gallery-list">
+                <!-- イラスト1枚目 -->
+                <div class="gallery-item">
+                    <img src="madoka_nekomimi.png" alt="まどかのイラスト1">
+                </div>
+
+                <!-- イラスト2枚目 -->
+                <div class="gallery-item">
+                    <img src="madoka_nekomimi2.png" alt="まどかのイラスト2">
+                </div>
+
+                <!-- イラスト3枚目 -->
+                <div class="gallery-item">
+                    <img src="swallow_tail.png" alt="まどかのイラスト3">
+                </div>
+
+                <!-- イラスト4枚目 -->
+                <div class="gallery-item">
+                    <img src="yuimado.png" alt="まどかのイラスト4">
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. もどるボタン -->
+        <a href="home.html" class="back-btn">← もどる</a>
+
+    </div>
+</body>
+</html>

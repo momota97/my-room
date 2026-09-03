@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home</title>
+
+    <!-- 使うフォント（Hachi Maru Pop） -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
+
+<style>
+    /* 1. 全体の設定（フォントと背景） */
+    body {
+        font-family: 'Hachi Maru Pop', cursive, sans-serif;
+        color: #ff8fc5; /* 文字色は全体的にピンク */
+        margin: 0;
+        min-height: 100vh;
+        /* 水玉背景 */
+        background-color: #fff0f9;
+        background-image: radial-gradient(#ffffff 15%, transparent 15%),
+                          radial-gradient(#ffffff 15%, transparent 15%);
+        background-position: 0 0, 20px 20px;
+        background-size: 40px 40px;
+    }
+
+    .site-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* 2. Welcomeエリア */
+    .welcome-card {
+        background: rgba(255, 254, 255, 0.9);
+        padding: 50px 30px;
+        text-align: center;
+        width: 100%;
+        max-width: 650px;
+        margin-bottom: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        box-sizing: border-box;
+    }
+
+    .welcome-card h1 {
+        margin-top: 0;
+        font-size: 2.2em;
+    }
+
+    /* 3. 流れるポエム（marquee） */
+    .poem-area {
+        width: 100%;
+        max-width: 650px;
+        margin-bottom: 25px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    /* 3.5 中央エリア（サイト説明 ＆ about me） */
+    .center-section {
+        width: 100%;
+        max-width: 650px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 25px;
+    }
+
+    /* サイト概要テキストエリア */
+    .site-about-card {
+        background: rgba(255, 254, 255, 0.9);
+        padding: 25px 20px;
+        text-align: center;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        box-sizing: border-box;
+        color: #666;
+        font-size: 0.9em;
+        line-height: 1.8;
+    }
+
+    /* about me (About-Me.html) リンクカード */
+    .aboutme-link-card {
+        display: block;
+        background: rgba(255, 254, 255, 0.9); /* 通常時：白い背景 */
+        color: #ff8fc5;                       /* 通常時：ピンク色の文字 */
+        padding: 20px;
+        text-align: center;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        box-sizing: border-box;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.1em;
+        transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.2s, color 0.2s;
+    }
+
+    .aboutme-link-card:hover {
+        background-color: #ff8fc5;  /* ホバー時：ピンク背景 */
+        color: #ffffff;             /* ホバー時：白文字 */
+        transform: scale(1.02) translateY(-2px);
+    }
+
+    /* 4. 下部2カラムエリア（Flexbox） */
+    .bottom-columns {
+        display: flex;
+        gap: 20px;
+        width: 100%;
+        max-width: 650px;
+        justify-content: center;
+    }
+
+    .left-col, .right-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* 5. 各種カード（info-card） */
+    .info-card {
+        background: rgba(255, 254, 255, 0.9);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        min-height: 100px;
+        box-sizing: border-box;
+    }
+
+    .info-card h2 {
+        font-size: 1.1em;
+        margin-top: 0;
+        border-bottom: 2px dashed #ffb6c1;
+        padding-bottom: 5px;
+        text-align: center;
+    }
+
+    /* X（Twitter）テキストの調整 */
+    .x-info-text {
+        color: #777;
+        font-size: 0.85em;
+        line-height: 1.5;
+        text-align: left;
+        margin: 10px 0;
+        padding-left: 10px;
+    }
+
+    /* X（Twitter）ボタンの調整 */
+    .link-btn {
+        display: block;
+        margin: 15px auto 0;
+        max-width: 140px;
+        text-align: center;
+        padding: 8px 15px;
+        background-color: #ff8fc5;
+        color: white;
+        text-decoration: none;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.85em;
+        transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.2s;
+    }
+    .link-btn:hover {
+        background-color: #ffb6c1;
+        transform: scale(1.08) translateY(-2px);
+    }
+
+    /* --- ナビゲーションボタンエリア（枠なし・白基調） --- */
+    .nav-buttons-container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .nav-btn {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 14px 20px;
+        background: rgba(255, 254, 255, 0.9);
+        color: #ff8fc5;
+        border: none;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.05em;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.2s ease, color 0.2s ease;
+        box-sizing: border-box;
+    }
+
+    .nav-btn .icon {
+        font-size: 1.2em;
+        margin-right: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+    }
+
+    .nav-btn:hover {
+        background-color: #ff8fc5;
+        color: #ffffff;
+        transform: scale(1.02) translateY(-2px);
+    }
+    
+    /* 更新履歴のスクロール設定 */
+    .history-list {
+        max-height: 120px;
+        overflow-y: auto;
+        padding-right: 5px;
+
+        /* Firefox向けスクロールバー設定 */
+        scrollbar-width: thin;
+        scrollbar-color: #ffb6c1 #fff0f9;
+    }
+
+    /* Webkit（Chrome, Safari, Edge等）向けスクロールバー設定 */
+    .history-list::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .history-list::-webkit-scrollbar-track {
+        background: #fff0f9;
+        border-radius: 10px;
+    }
+
+    .history-list::-webkit-scrollbar-thumb {
+        background: #ffb6c1;
+        border-radius: 10px;
+    }
+
+    .history-list::-webkit-scrollbar-thumb:hover {
+        background: #ff8fc5;
+    }
+
+    .history-list p {
+        margin: 6px 0;
+        font-size: 0.8em;
+        color: #666;
+        line-height: 1.4;
+    }
+
+    /* 枠なし推しのこと・浮遊エリア */
+    .oshi-link-container {
+        position: relative;
+        display: block;
+        text-decoration: none;
+        text-align: center;
+        margin-top: 10px;
+        /* ふよふよ浮遊アニメーション */
+        animation: float 4s ease-in-out infinite;
+    }
+
+    /* メイン画像（背景枠なし） */
+    .oshi-img {
+        width: 100%;
+        max-width: 320px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.05));
+        transition: transform 0.3s ease;
+        position: relative;
+        z-index: 1;
+    }
+
+    .oshi-link-container:hover .oshi-img {
+        transform: scale(1.03);
+    }
+
+    /* ☁️ 雲のエフェクト */
+    .cloud-effect {
+        position: absolute;
+        pointer-events: none;
+        animation: float-cloud 5s ease-in-out infinite alternate;
+        z-index: 2;
+    }
+
+    .cloud1 {
+        left: -10px;
+        bottom: 10px;
+        width: 100px;
+    }
+
+    .cloud2 {
+        right: 20px;
+        top: 0px;
+        width: 100px;
+        animation-delay: -2s;
+    }
+
+    /* 🎈 浮遊アニメーション */
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+
+    @keyframes float-cloud {
+        0% { transform: translateY(0px) translateX(0px); }
+        50% { transform: translateY(-6px) translateX(4px); }
+        100% { transform: translateY(0px) translateX(0px); }
+    }
+
+    /* 上の区切り点線 */
+    .section-divider {
+        width: 100%;
+        border-top: 2px dashed #ff8fc5;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* 🔗 リンク・バナー案内エリア（背景枠なし・横並び） */
+    .link-banner-container {
+        width: 100%;
+        max-width: 650px;
+        margin-top: 10px;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .link-banner-title {
+        font-size: 1.1em;
+        color: #ff8fc5;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    /* 左バナー・右テキストの横並びレイアウト */
+    .banner-flex-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        text-align: left;
+    }
+
+    /* 左側：バナー画像 */
+    .banner-img-box img {
+        width: 200px;
+        height: 40px;
+        display: block;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    /* 右側：説明テキスト */
+    .banner-text {
+        color: #666;
+        font-size: 0.8em;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    /* スマホなど画面が狭いときは縦並びにする調整 */
+    @media (max-width: 500px) {
+        .banner-flex-box {
+            flex-direction: column;
+            text-align: center;
+            gap: 12px;
+        }
+    }
+
+    /* 最下部ポエム */
+    .bottom-poem {
+        margin-top: 30px;
+        font-size: 0.85em;
+        opacity: 0.8;
+    }
+</style>
+
+</head>
+<body>
+    <div class="site-container">
+
+        <!-- 1. メイン（Welcome）エリア -->
+        <div class="welcome-card">
+            <h1>˚₊ Momota's Room ₊˚</h1>
+            <p>Welcome to the world of dreams💤<br>Don't forget to take your medicine...</p>
+        </div>
+
+        <!-- 2. 流れるポエム（marquee）エリア -->
+        <div class="poem-area">
+            <marquee scrolldelay="120">When will this ever end...? (-ω-;) Hmm...</marquee>
+        </div>
+
+        <!-- 3. 中央エリア（サイト説明 ＆ about me リンク） -->
+        <div class="center-section">
+            <div class="site-about-card">
+                ⋆⋅⋅⋅ Read Me ⋅⋅⋅⋆<br>
+                <br>
+                ここは桃太の個人サイトです。<br>
+                某作品の二次創作 / 夢創作を取り扱っております。<br>
+                <br>
+                【 傾向と注意 】<br>
+                <br>
+                現在、某作品（hndr）のみを取り扱っております。<br>
+                内容はほぼ、ツバメのお嬢ちゃんに関するものです。<br>
+                固定男夢主の設定を含みます。地雷・苦手な方は自衛をお願いいたします。<br>
+                <br>
+                ⋆⋅⋅⋅⊱∘──────∘⊰⋅⋅⋅⋆<br>
+                <br>
+                サイト内の作品はすべて桃太の妄想（フィクション）であり、<br>
+                実在の人物、作品、制作会社、原作者、及びすべての公式関係者様とは一切関係ありません。<br>
+                <br>
+                【 禁止事項 】<br>
+                <br>
+                画像・文章の無断転載・使用・お持ち帰り（キャプチャ等含む）は厳禁です。<br>
+                共有型ブックマーク（タグ付け）、公共施設からの閲覧。<br>
+                サイトへの誹謗中傷、荒らし行為。<br>
+                <br>
+                ⋆⋅⋅⋅⊱∘──────∘⊰⋅⋅⋅⋆<br>
+                <br>
+                Notice : Search Engine No Index / 検索除け済<br>
+            </div>
+
+            <!-- 自分のプロフィール（About-Me.html）へのリンク -->
+            <a href="About-Me.html" class="aboutme-link-card">
+                ｡.୨୧ About Me ୨୧.｡
+            </a>
+        </div>
+
+        <!-- 4. 下部2カラムエリア -->
+        <div class="bottom-columns">
+
+            <!-- 左カラム -->
+            <div class="left-col">
+                <div class="info-card">
+                    <h2>X</h2>
+                    <div class="x-info-text">
+                        <p>
+                            描いた絵を載せたり<br>
+                            グッズの写真を載せたり<br>
+                            <br>
+                            1カ月に1回くらいしか<br>
+                            更新できない…💤
+                        </p>
+                    </div>
+                    <a href="https://x.com/momota_ebato97" class="link-btn" target="_blank">のぞいてみる</a>
+                </div>
+
+                <!-- リンクボタンエリア（Photo Log / Bromide Log / About Persona） -->
+                <div class="nav-buttons-container">
+                    <a href="Photo-Log.html" class="nav-btn">
+                        <span class="icon">📅</span>
+                        <span>Photo Log</span>
+                    </a>
+                    <a href="Bromide-Log.html" class="nav-btn">
+                        <span class="icon">📷</span>
+                        <span>Bromide Log</span>
+                    </a>
+                    <a href="About-Persona.html" class="nav-btn">
+                        <span class="icon">🖤</span>
+                        <span>About Persona</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 右カラム -->
+            <div class="right-col">
+                <div class="info-card history-box">
+                    <h2>更新履歴</h2>
+                    <div class="history-list">
+                        <p>2026/07/25：サイト開設 💤</p>
+                    </div>
+                </div>
+
+                <!-- 枠なし・ふよふよ浮遊する「推しのこと」リンク -->
+                <a href="oshi.html" class="oshi-link-container">
+                    <img src="home_oshi_effect1.png" class="cloud-effect cloud1" alt="雲1">
+                    <img src="home_oshi_effect2.png" class="cloud-effect cloud2" alt="雲2">
+                    <img src="home_oshi.png" class="oshi-img" alt="推しのこと（oshi.htmlへ）">
+                </a>
+            </div>
+
+        </div>
+
+        <!-- 🔗 リンク・バナー案内エリア（枠なし・横並び） -->
+        <div class="link-banner-container">
+            <div class="section-divider"></div>
+            <div class="link-banner-title">.୨୧ Link ୨୧.</div>
+            
+            <div class="banner-flex-box">
+                <!-- 左側：バナー画像 -->
+                <div class="banner-img-box">
+                    <img src="banner_200×40.png" alt="Momota's Room バナー">
+                </div>
+
+                <!-- 右側：説明テキスト -->
+                <p class="banner-text">
+                    インデックスページ(URL)<br>
+                    のみリンクフリーです。<br>
+                    バナーは直リンクせず、保存してご利用ください🐾<br>
+                </p>
+            </div>
+        </div>
+
+        <!-- HOME最下部：ひっそり英語ポエム -->
+        <div class="bottom-poem">
+            <p>I don't wanna work...💤</p>
+        </div>
+
+    </div>
+</body>
+</html>

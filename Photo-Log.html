@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Log - Momota's Room</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
+
+<style>
+    /* 全体設定 */
+    body {
+        font-family: 'Hachi Maru Pop', cursive, sans-serif;
+        color: #ff8fc5;
+        margin: 0;
+        min-height: 100vh;
+        background-color: #fff0f9;
+        background-image: radial-gradient(#ffffff 15%, transparent 15%),
+                          radial-gradient(#ffffff 15%, transparent 15%);
+        background-position: 0 0, 20px 20px;
+        background-size: 40px 40px;
+    }
+
+    /* homeと統一（max-width: 800px） */
+    .site-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    /* タイトル（homeの要素幅 max-width: 650px に統一） */
+    .title-card {
+        background: rgba(255, 254, 255, 0.9);
+        padding: 30px 20px;
+        text-align: center;
+        width: 100%;
+        max-width: 650px;
+        margin-bottom: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        box-sizing: border-box;
+    }
+
+    .title-card h1 {
+        margin: 0;
+        font-size: 2em;
+    }
+
+    /* フォトログリスト（homeの要素幅 max-width: 650px に統一） */
+    .photo-log-list {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        width: 100%;
+        max-width: 650px;
+        box-sizing: border-box;
+    }
+
+    /* 日付区切り */
+    .date-divider {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin: 20px 0 10px;
+        color: #ff8fc5;
+        font-size: 0.95em;
+        font-weight: bold;
+    }
+
+    .date-divider::before,
+    .date-divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 2px dashed #ffb6c1;
+    }
+
+    .date-divider span {
+        padding: 0 15px;
+        background-color: rgba(255, 255, 255, 0.6);
+        border-radius: 12px;
+    }
+
+    /* 各ログのアイテムコンテナ */
+    .photo-item {
+        position: relative;
+        display: flex;
+        width: 100%;
+        align-items: flex-start;
+        box-sizing: border-box;
+    }
+
+    /* パターン1：画像が左、吹き出しが右上 */
+    .photo-item.type-left {
+        justify-content: flex-start;
+    }
+
+    /* パターン2：画像が右、吹き出しが左下 */
+    .photo-item.type-right {
+        justify-content: flex-end;
+    }
+
+    /* パターン3：画像のみ（全体幅） */
+    .photo-item.type-only {
+        justify-content: center;
+        width: 100%;
+    }
+
+    /* パターン4：画像2枚横並び（Grid指定で高さを完全統一） */
+    .photo-item.type-double {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .photo-item.type-double .photo-wrapper {
+        width: 100% !important;
+        height: 100%;
+        max-width: none !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        aspect-ratio: 1 / 1; 
+    }
+
+    .photo-item.type-double .photo-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    /* 2枚並び画像＋下に吹き出しの複合レイアウト */
+    .photo-item.type-double-with-bubble {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .photo-item.type-double-with-bubble .speech-bubble {
+        position: relative;
+        width: 90%;
+        top: auto;
+        right: auto;
+        bottom: auto;
+        left: auto;
+    }
+
+    .photo-item.type-double-with-bubble .speech-bubble::after {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 0 10px 12px 10px;
+        border-style: solid;
+        border-color: transparent transparent rgba(255, 254, 255, 0.95) transparent;
+    }
+
+    /* 画像ラッパー */
+    .photo-wrapper {
+        width: 65%;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        background-color: #fff;
+        line-height: 0;
+        box-sizing: border-box;
+    }
+
+    .photo-item.type-only .photo-wrapper {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    .photo-wrapper img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* 共通吹き出しスタイル */
+    .speech-bubble {
+        position: absolute;
+        width: 45%;
+        background: rgba(255, 254, 255, 0.95);
+        padding: 18px 20px;
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        box-sizing: border-box;
+        color: #666;
+        font-size: 0.85em;
+        line-height: 1.6;
+        z-index: 2;
+    }
+
+    .speech-bubble p {
+        margin: 0;
+    }
+
+    .type-left .speech-bubble {
+        top: -15px;
+        right: 0;
+    }
+
+    .type-left .speech-bubble::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 25px;
+        border-width: 12px 10px 0 0;
+        border-style: solid;
+        border-color: rgba(255, 254, 255, 0.95) transparent transparent transparent;
+    }
+
+    .type-right .speech-bubble {
+        bottom: -15px;
+        left: 0;
+    }
+
+    .type-right .speech-bubble::after {
+        content: '';
+        position: absolute;
+        bottom: 20px;
+        right: -10px;
+        border-width: 10px 0 0 12px;
+        border-style: solid;
+        border-color: transparent transparent transparent rgba(255, 254, 255, 0.95);
+    }
+
+    /* パターン2-2：画像が右、吹き出しが左上 */
+    .photo-item.type-right-top {
+        justify-content: flex-end;
+    }
+
+    .type-right-top .speech-bubble {
+        top: -15px;
+        left: 0;
+    }
+
+    .type-right-top .speech-bubble::after {
+        content: '';
+        position: absolute;
+        top: 20px;
+        right: -10px;
+        border-width: 10px 0 0 12px;
+        border-style: solid;
+        border-color: transparent transparent transparent rgba(255, 254, 255, 0.95);
+    }
+
+    /* もどるボタン */
+    .back-btn {
+        display: block;
+        margin: 50px auto 0;
+        max-width: 140px;
+        text-align: center;
+        padding: 8px 15px;
+        background-color: #ff8fc5;
+        color: white;
+        text-decoration: none;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.85em;
+        transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.2s;
+    }
+
+    .back-btn:hover {
+        background-color: #ffb6c1;
+        transform: scale(1.08) translateY(-2px);
+    }
+
+    /* スマホ表示向けの調整 */
+    @media (max-width: 600px) {
+        .photo-wrapper {
+            width: 75%;
+        }
+        .speech-bubble {
+            width: 55%;
+            font-size: 0.75em;
+            padding: 12px 14px;
+        }
+        .photo-item.type-double-with-bubble .speech-bubble {
+            width: 95%;
+        }
+    }
+</style>
+</head>
+<body>
+    <div class="site-container">
+
+        <!-- タイトルエリア -->
+        <div class="title-card">
+            <h1>˙˚ʚ Photo Log ɞ˚˙</h1>
+        </div>
+
+        <!-- フォトログエリア -->
+        <div class="photo-log-list">
+
+            <!-- 日付区切り17 -->
+            <div class="date-divider">
+                <span>2026.08.07</span>
+            </div>
+
+            <!-- 左画像 / 右上吹き出し -->
+            <div class="photo-item type-left">
+                <div class="photo-wrapper">
+                    <img src="20260807.jpg" alt="お出かけ写真1">
+                </div>
+                <div class="speech-bubble">
+                    <p><strong>ハンドレッドノートコラボカフェ2026<br>
+                    『夏祭 by cafe Marple』<br>
+                    開催✨</strong><br>
+                    <br>
+                    in X CAFE TOKYO<br>
+                    <br>
+                    【食べたもの】<br>
+                    🍓スワテのいちごあめ<br>
+                    💤スワテの睡眠花ソーダ<br>
+                    🍞ホクアのベビーカステラ<br>
+                    🏖️ホクアのブルーハワイと夏ソーダ<br>
+                    etc…</p>
+                </div>
+            </div>
+
+            <!-- 画像のみ（1枚） -->
+            <div class="photo-item type-only">
+                <div class="photo-wrapper">
+                    <img src="20260807_2.jpg" alt="写真のみ">
+                </div>
+            </div>
+
+            <div class="photo-item type-double-with-bubble">
+                <div class="photo-wrapper" style="width: 100%;">
+                    <img src="20260807_3.jpg" alt="お出かけ写真">
+                </div>
+                <div class="speech-bubble">
+                    パネルがスワテだけ隔離されててなんかよかった😁<br>
+                    まどか真ん中でかわいいねえ😙<br>
+                </div>
+            </div>
+
+            <!-- 画像2枚横並び＋下に吹き出し -->
+            <div class="photo-item type-double-with-bubble">
+                <div class="photo-item type-double">
+                    <div class="photo-wrapper">
+                        <img src="20260807_4.jpg" alt="横並び写真1">
+                    </div>
+                    <div class="photo-wrapper">
+                        <img src="20260807_5.jpg" alt="横並び写真2">
+                    </div>
+                </div>
+                <div class="speech-bubble">
+                    メイドのアクスタ二層構造で奥行があってめっちゃかわいい！<br>
+                    <br>
+                    慎本先生の描くまどか毎回やわらかい雰囲気でまつ毛ばしばしでかわいい…🍓<br>
+                    いつもかわいいまどかをありがとうございます…🙏<br>
+                </div>
+            </div>
+
+            <!-- 日付区切り16 -->
+            <div class="date-divider">
+                <span>2026.06.11</span>
+            </div>
+
+            <!-- 右画像 / 左上吹き出し -->
+            <div class="photo-item type-right-top">
+                <div class="photo-wrapper">
+                    <img src="20260520.jpg" alt="お出かけ写真2">
+                </div>
+                <div class="speech-bubble">
+                    <p><strong>小説<br>
+                    『ハンドレッドノート<br>
+                     －スワロウテイルの事件簿Ⅱ－』<br>
+                    発売✨</strong><br>
+                    <br>
+                    過去作と比べて登場人物が<br>
+                    かなり多くて終始賑やかなのに、<br>
+                    散らかった印象もなく凄く<br>
+                    読みやすかった！📖</p>
+                </div>
+            </div>
+
+            <!-- 左画像 / 右上吹き出し -->
+            <div class="photo-item type-left">
+                <div class="photo-wrapper">
+                    <img src="20260611.jpg" alt="お出かけ写真1">
+                </div>
+                <div class="speech-bubble">
+                    異能持ちが複数人出てくるから<br>
+                    ハンドレ世界観強めかな？<br>
+                    と思っていたけど、<br>
+                    スワテらしい人の闇に触れた話で<br>
+                    探偵ものとして最後まで楽しく読めた🧐<br>
+                    <br>
+                    それぞれの異能にちゃんと<br>
+                    見せ場があるのも良かったし、<br>
+                    まどかの誠一に対する感情の重さが<br>
+                    相変わらずだし、安定の鈍感な誠一に<br>
+                    対して健三がイラついてる感じが<br>
+                    見ていて楽しかった🙌<br>
+                    <br>
+                    予約分の特典が全部まどかだったから<br>
+                    追加購入で仁もGetした🔖<br>
+                </div>
+            </div>
+
+            <!-- 日付区切り15 -->
+            <div class="date-divider">
+                <span>2026.04.29</span>
+            </div>
+
+            <!-- 左画像 / 右上吹き出し -->
+            <div class="photo-item type-left">
+                <div class="photo-wrapper">
+                    <img src="20260429.jpg" alt="お出かけ写真1">
+                </div>
+                <div class="speech-bubble">
+                    <strong>3周年ポップアップストア<br>
+                    『HUNDRED NOTE<br>
+                     3th ANNIVERSARY<br>
+                     POP UP STORE「Memento」』<br>
+                    開催✨</strong><br>
+                    <br>
+                    慎本先生の描くまどか、<br>
+                    いつも内股で本当に命が<br>
+                    助かっています…🤯<br>
+                    <br>
+                    誠一のポーズもらしくて好き👊<br>
+                </div>
+            </div>
+
+            <!-- 画像のみ（1枚） -->
+            <div class="photo-item type-only">
+                <div class="photo-wrapper">
+                    <img src="20260429_2.jpg" alt="写真のみ">
+                </div>
+            </div>
+
+            <!-- 画像のみ（1枚） -->
+            <div class="photo-item type-only">
+                <div class="photo-wrapper">
+                    <img src="20260429_3.jpg" alt="写真のみ">
+                </div>
+            </div>
+
+            <!-- 画像のみ（1枚） -->
+            <div class="photo-item type-only">
+                <div class="photo-wrapper">
+                    <img src="20260429_4.jpg" alt="写真のみ">
+                </div>
+            </div>
+
+            <div class="photo-item type-double-with-bubble">
+                <div class="photo-wrapper" style="width: 100%;">
+                    <img src="20260429_5.jpg" alt="お出かけ写真">
+                </div>
+                <div class="speech-bubble">
+                    💙🐳🌐🧢🧊🐬🌀🌊💎仁とまどかが並んでて幸💗🎀🩰🦑🌺🍧💕🌷🧁<br>
+                </div>
+            </div>
+
+            <!-- 画像のみ（1枚） -->
+            <div class="photo-item type-only">
+                <div class="photo-wrapper">
+                    <img src="20260429_6.jpg" alt="写真のみ">
+                </div>
+            </div>
+
+            <!-- 画像のみ（1枚） -->
+            <div class="photo-item type-only">
+                <div class="photo-wrapper">
+                    <img src="20260429_7.jpg" alt="写真のみ">
+                </div>
+            </div>
+
+            <!-- 日付区切り14 -->
+            <div class="date-divider">
+                <span>2026.04.11</span>
+            </div>
+
+            <!-- 左画像 / 右上吹き出し -->
+            <div class="photo-item type-left">
+                <div class="photo-wrapper">
+                    <img src="20260411_2.jpg" alt="お出かけ写真1">
+                </div>
+                <div class="speech-bubble">
+                    <strong>先行上映会vol.11<br>
+                    『スワロウテイルの長編ドラマ<br>
+                     「残響/残照:Refrain」』<br>
+                    開催✨</strong><br>
+                    <br>
+                    グッズ購入特典の<br>
+                    ツインテールの日Verまどかの<br>
+                    ために参戦したといっても<br>
+                    過言ではない…✌️<br>
+                </div>
+            </div>
+
+            <div class="photo-item type-double-with-bubble">
+                <div class="photo-wrapper" style="width: 100%;">
+                    <img src="20260411.jpg" alt="お出かけ写真">
+                </div>
+                <div class="speech-bubble">
+                    いつも思うけど、誠一と健三のイメージカラーっていったい何色なんだ…🤔<br>
+                    個人的にはまどか＝ピンク、誠一＝緑、健三＝青緑って感じなんだが。<br>
+                    ↑ネスト山荘のスノボアクスタはイメージ通りだと思ったな…💭<br>
+                </div>
+            </div>
+
+            <!-- 日付区切り13 -->
+            <div class="date-divider">
+                <span>2026.03.20</span>
+            </div>
+
+            <!-- 右画像 / 左下吹き出し -->
+            <div class="photo-item type-right">
+                <div class="photo-wrapper">
+                    <img src="20260320.jpg" alt="お出かけ写真2">
+                </div>
+                <div class="speech-bubble">
+                    <p><strong>小説<br>
+                    『ハンドレッドノート<br>
+                     －名探偵 司波仁の事件簿－』<br>
+                    発売✨</strong><br>
+                    <br>
+                    仁の小説はハンドレの世界観がより濃く感じられて、近未来の雰囲気がすごく<br>
+                    良かった！<br>
+                    登場人物の中では成沢が一番好き👟<br>
+                    <br>
+                    特典が仁だったのも最高に嬉しい💖</p>
+                </div>
+            </div>
+
+            <!-- 日付区切り12 -->
+            <div class="date-divider">
+                <span>2026.02.07</span>
+            </div>
+
+            <!-- 画像のみ（1枚） -->
+            <div class="photo-item type-only">
+                <div class="photo-wrapper">
+                    <img src="20260207.jpg" alt="写真のみ">
+                </div>
+            </div>
+
+            <!-- 左画像 / 右上吹き出し -->
+            <div class="photo-item type-left">
+                <div class="photo-wrapper">
+                    <img src="20260207_2.jpg" alt="お出かけ写真1">
+                </div>
+                <div class="speech-bubble">
+                    <p><strong>大型イベント<br>
+                    『2026 HUNDRED NOTE<br>
+                     WINTER FEST<br>
+                     “ネスト山荘の悲劇<br>
+                     ー探偵は雪山に行ってはならぬー“』<br>
+                    開催✨</strong><br>
+                    <br>
+                    全4公演参加しました✨<br>
+                    素敵なイベントありがとう<br>
+                    ございました🙏<br>
+                    <br>
+                    仁とまどか縦並びで幸…<br>
+                    <br>
+                    美人設定の翠と美少女設定のまどかが<br>
+                    マフラーリボンにしてて<br>
+                    最高に解釈一致でtskr🎀</p>
+                </div>
+            </div>
+
+            <!-- 画像2枚横並び -->
+            <div class="photo-item type-double">
+                <div class="photo-wrapper">
+                    <img src="20260207_4.jpg" alt="横並び写真1">
+                </div>
+                <div class="photo-wrapper">
+                    <img src="20260207_3.jpg" alt="横並び写真2">
+                </div>
+            </div>
+
+            <!-- 右画像 / 左下吹き出し -->
+            <div class="photo-item type-right">
+                <div class="photo-wrapper">
+                    <img src="20260207_5.jpg" alt="お出かけ写真2">
+                </div>
+                <div class="speech-bubble">
+                    イベント2日目にちょうど<br>
+                    雪が降って超イベント日和だった🌨<br>
+                    <br>
+                    スノボアクスタがぴったり…✨<br>
+                </div>
+            </div>
+
+            <!-- 日付区切り11 -->
+            <div class="date-divider">
+                <span>2026.02.05</span>
+            </div>
+
+            <!-- 右画像 / 左下吹き出し -->
+            <div class="photo-item type-right">
+                <div class="photo-wrapper">
+                    <img src="20260205.jpg" alt="お出かけ写真2">
+                </div>
+                <div class="speech-bubble">
+                    <p><strong>2026.02.02～<br>
+                    POP UP STORE<br>
+                    『ハンドレッドノート<br>
+                     大正浪漫Ver. ストア in 東京』<br>
+                    開催✨</strong><br>
+                    <br>
+                    仁はいつも通りクールで格好いい感じで<br>
+                    まどかはなんかふふんっ😤て顔してて<br>
+                    可愛いんだが🤦‍♂️</p>
+                </div>
+            </div>
+
+            <!-- 日付区切り10 -->
+            <div class="date-divider">
+                <span>2025.11.16</span>
+            </div>
+
+            <!-- 左画像 / 右上吹き出し -->
+            <div class="photo-item type-left">
+                <div class="photo-wrapper">
+                    <img src="20251116.jpg" alt="お出かけ写真1">
+                </div>
+                <div class="speech-bubble">
+                    <p><strong>オリジナルワイン<br>
+                    『HUNDRED NOTE<br>
+                     -NEST's Treasured Wine-』<br>
+                    発売✨</strong><br>
+                    <br>
+                    ホークアイズとスワロウテイルの<br>
+                    コースターで注文した🦅💤</p>
+                </div>
+            </div>
+
+            <!-- 日付区切り9 -->
+            <div class="date-divider">
+                <span>2025.10.23</span>
+            </div>
+
+            <!-- 右画像 / 左下吹き出し -->
+            <div class="photo-item type-right">
+                <div class="photo-wrapper">
+                    <img src="20251023.jpg" alt="お出かけ写真2">
+                </div>
+                <div class="speech-bubble">
+                    <p><strong>録り下ろしボイス搭載<br>
+                    コラボワイヤレスイヤホン<br>
+                    発売✨</strong><br>
+                    <br>
+                    仁とまどかモデル購入した🎶</p>
+                </div>
+            </div>
+
+            <!-- 日付区切り8 -->
+            <div class="date-divider">
+                <span>2025.07.18</span>
+            </div>
+
+            <!-- 左画像 / 右上吹き出し -->
+            <div class="photo-item type-left">
+                <div class="photo-wrapper">
+                    <img src="20250719.jpg" alt="お出かけ写真1">
+                </div>
+                <div class="speech-bubble">
+                    <p><strong>2025.07.18～<br>
+                    ハンドレッドノートコラボカフェ<br>
+                    『Cafe Marple』<br>
+                    開催✨</strong><br>
+                    <br>
+                    【食べたもの】<br>
+                    🥣まどかのシェンドウジャン<br>
+                     ↑また食べたい<br>
+                    🥪健三のバインミー<br>
+                    ☕スワテのタピオカミルクティー<br>
+                    🍝仁のナポリタン<br>
+                    🥤ホクアのクリームソーダ<br>
+                     ↑綺麗でおいしかった</p>
+                </div>
+            </div>
+
+            <!-- 画像2枚横並び -->
+            <div class="photo-item type-double">
+                <div class="photo-wrapper">
+                    <img src="20250719_2.jpg" alt="横並び写真1">
+                </div>
+                <div class="photo-wrapper">
+                    <img src="20250719_3.jpg" alt="横並び写真2">
+                </div>
+            </div>
+
+            <!-- 画像2枚横並び -->
+            <div class="photo-item type-double">
+                <div class="photo-wrapper">
+                    <img src="20250719_4.jpg" alt="横並び写真1">
+                </div>
+                <div class="photo-wrapper">
+                    <img src="20250719_5.jpg" alt="横並び写真2">
+                </div>
+            </div>
+
+            <!-- 日付区切り7 -->
+            <div class="date-divider">
+                <span>2025.06.18</span>
+            </div>
+
+            <!-- 右画像 / 左下吹き出し -->
+            <div class="photo-item type-right">
+                <div class="photo-wrapper">
+                    <img src="20250618.jpg" alt="お出かけ写真2">
+                </div>
+                <div class="speech-bubble">
+                    <p><strong>小説<br>
+                    『ハンドレッドノート<br>
+                     －スワロウテイルの事件簿－』<br>
+                    発売✨</strong><br>
+                    <br>
+                    誠一～～～!!!😭<br>
+                    健三～～～!!!😭<br>
+                    鈍感な記録者たちに尊さ限界突破💢<br>
+                    スワロウテイル永久不滅❕<br>
+                    <br>
+                    宿里にお嬢ちゃんとか<br>
+                    おチビちゃんって呼ばれて<br>
+                    怒ってるまどかかわいいがすぎる🤦‍♂️</p>
+                </div>
+            </div>
+
+            <!-- 日付区切り6 -->
+            <div class="date-divider">
+                <span>2025.05.04</span>
+            </div>
+
+            <!-- 左画像 / 右上吹き出し -->
+            <div class="photo-item type-left">
+                <div class="photo-wrapper">
+                    <img src="20250504.jpg" alt="お出かけ写真1">
+                </div>
+                <div class="speech-bubble">
+                    <p><strong>2025.05.01～<br>
+                    2周年ポップアップストア<br>
+                    『Memento』<br>
+                    開催✨</strong><br>
+                    <br>
+                    まどかのネコ耳ニット帽<br>
+                    本当にありがとうございます🐾<br>
+                    かわい～よ～😭<br>
+                    普段まどかの露出少なすぎて<br>
+                    半袖ですら肌出しすぎ！？と思った。<br>
+                    <br>
+                    ネストサポーター認証カードGet！</p>
+                </div>
+            </div>
+
+            <!-- 画像2枚横並び -->
+            <div class="photo-item type-double">
+                <div class="photo-wrapper">
+                    <img src="20250504_2.jpg" alt="横並び写真1">
+                </div>
+                <div class="photo-wrapper">
+                    <img src="20250504_3.jpg" alt="横並び写真2">
+                </div>
+            </div>
+
+            <!-- 日付区切り5 -->
+            <div class="date-divider">
+                <span>2025.04.10</span>
+            </div>
+
+            <!-- 左画像 / 右上吹き出し -->
+            <div class="photo-item type-left">
+                <div class="photo-wrapper">
+                    <img src="20250410.jpg" alt="お出かけ写真1">
+                </div>
+                <div class="speech-bubble">
+                    <p><strong>primaniacs<br>
+                    『「ハンドレッドノート」フレグランス<br>
+                     第2弾』<br>
+                    発売✨</strong><br>
+                    <br>
+                    スワテ3人の香水購入😤<br>
+                    まどかと健三がイメージ通り<br>
+                    フローラルな高級感と清潔感ある<br>
+                    香りで、事務所もこんな匂いするの<br>
+                    かな～と思った…<br>
+                    誠一は二人の後に香ったからか<br>
+                    結構強くて辛く感じたけど<br>
+                    そこも誠一っぽくてよかった‼️</p>
+                </div>
+            </div>
+
+            <!-- 日付区切り4 -->
+            <div class="date-divider">
+                <span>2024.12.19</span>
+            </div>
+
+            <!-- 右画像 / 左下吹き出し -->
+            <div class="photo-item type-right">
+                <div class="photo-wrapper">
+                    <img src="20241219.jpg" alt="お出かけ写真2">
+                </div>
+                <div class="speech-bubble">
+                    <p><strong>primaniacs<br>
+                    『「ハンドレッドノート」フレグランス<br>
+                     第1弾』<br>
+                    発売✨</strong><br>
+                    <br>
+                    仁の香水購入😤<br>
+                    クールで爽やかな清潔感ある香りだけど<br>
+                    よく香ると甘さがあって！<br>
+                    これは間違いなく司波仁だ！！<br>
+                    ってなった🤯</p>
+                </div>
+            </div>
+
+            <!-- 日付区切り3 -->
+            <div class="date-divider">
+                <span>2024.11.03</span>
+            </div>
+
+            <!-- 左画像 / 右上吹き出し -->
+            <div class="photo-item type-left">
+                <div class="photo-wrapper">
+                    <img src="20241103.jpg" alt="お出かけ写真1">
+                </div>
+                <div class="speech-bubble">
+                    <p><strong>大型イベント<br>
+                    『2024 HUNDRED NOTE<br>
+                     AUTUMN FEST<br>
+                     “ネスト 大文化祭”』<br>
+                    開催✨</strong><br>
+                    <br>
+                    全2公演参加しました✨<br>
+                    ホクアとスワテのペンラふりふりした🔆</p>
+                </div>
+            </div>
+
+            <!-- 画像のみ（1枚） -->
+            <div class="photo-item type-only">
+                <div class="photo-wrapper">
+                    <img src="20241103_2.jpg" alt="写真のみ">
+                </div>
+            </div>
+
+            <!-- 画像2枚横並び -->
+            <div class="photo-item type-double">
+                <div class="photo-wrapper">
+                    <img src="20241103_3.jpg" alt="横並び写真1">
+                </div>
+                <div class="photo-wrapper">
+                    <img src="20241103_4.jpg" alt="横並び写真2">
+                </div>
+            </div>
+
+            <!-- 画像2枚横並び -->
+            <div class="photo-item type-double">
+                <div class="photo-wrapper">
+                    <img src="20241103_5.jpg" alt="横並び写真1">
+                </div>
+                <div class="photo-wrapper">
+                    <img src="20241103_6.jpg" alt="横並び写真2">
+                </div>
+            </div>
+
+            <div class="photo-item type-double-with-bubble">
+                <div class="photo-wrapper" style="width: 100%;">
+                    <img src="20241103_7.jpg" alt="お出かけ写真">
+                </div>
+                <div class="speech-bubble">
+                    🌙夜の部入場者特典まどか自引きした♡♡♡<br>
+                    少し頬が赤らんでるのがかわいいし、ポーズがあざとすぎるし、<br>
+                    めっちゃまっすぐ見つめてくるしやっぱり美人😊<br>
+                    スワロウテイルのピンクド好みすぎて最高🤩<br>
+                </div>
+            </div>
+
+            <!-- 日付区切り2 -->
+            <div class="date-divider">
+                <span>2024.09.11</span>
+            </div>
+
+            <!-- 右画像 / 左下吹き出し -->
+            <div class="photo-item type-right">
+                <div class="photo-wrapper">
+                    <img src="20240911.jpg" alt="お出かけ写真2">
+                </div>
+                <div class="speech-bubble">
+                    <p><strong>ハンドレ初の公式小説！<br>
+                    『ハンドレッドノート<br>
+                     －名探偵 恵美まどかの事件簿－』<br>
+                    発売✨</strong><br>
+                    <br>
+                    短編四話収録となっていたけど<br>
+                    短編同士基本繋がっているので<br>
+                    一つの物語として見れて<br>
+                    全然物足りなさはなかったし、<br>
+                    やっぱりまどかは誰が見ても<br>
+                    天使のように可憐な美少女なんだと<br>
+                    再確認…👼<br>              
+                    康介大好きだ…</p>
+                </div>
+            </div>
+
+            <!-- 日付区切り1 -->
+            <div class="date-divider">
+                <span>2024.05.13</span>
+            </div>
+
+            <div class="photo-item type-left">
+                <div class="photo-wrapper">
+                    <img src="20240513.jpg" alt="お出かけ写真1">
+                </div>
+                <div class="speech-bubble">
+                    <p><strong>HUNDRED NOTE<br>
+                        1st anniversary<br>
+                        post card✨</strong><br>
+                    <br>
+                    ハンドレッドノート事務局から<br>
+                    misa先生描き下しの<br>
+                    ポストカードが届いた🎉<br>
+                    雨の日だったから焦った💦</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- もどるボタン -->
+        <a href="home.html" class="back-btn">← もどる</a>
+
+    </div>
+</body>
+</html>

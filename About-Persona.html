@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Persona - Momota's Room</title>
+
+    <!-- Google Fonts（Jim Nightshade ＋ しっぽり明朝） -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+    /* 全体設定 */
+    body {
+        font-family: 'Shippori Mincho', cursive, sans-serif;
+        color: #ff8fc5;
+        margin: 0;
+        min-height: 100vh;
+        background-color: #000000;
+    }
+
+    /* home.htmlと合わせた全体コンテナ（幅800px） */
+    .site-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    /* 1. タイトルエリア（幅650px） */
+    .title-card {
+        background: #000000;
+        border: 2px solid #555555;
+        padding: 30px 20px;
+        text-align: center;
+        width: 100%;
+        max-width: 650px;
+        margin-bottom: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+        box-sizing: border-box;
+    }
+
+    .title-card h1 {
+        margin: 0 0 10px 0;
+        font-family: 'Jim Nightshade', 'Shippori Mincho', cursive;
+        font-size: 2.8em;
+        letter-spacing: 2px;
+    }
+
+    .site-desc {
+        margin: 0;
+        font-size: 0.85em;
+        color: #ffffff;
+        line-height: 1.6;
+    }
+
+    /* 2. 下部2カラムエリア（幅650px） */
+    .bottom-columns {
+        display: flex;
+        gap: 20px;
+        width: 100%;
+        max-width: 650px;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
+    @media (max-width: 600px) {
+        .bottom-columns {
+            flex-direction: column;
+        }
+    }
+
+    .left-col, .right-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* 共通カードスタイル */
+    .info-card {
+        position: relative; /* 重ねる装飾の基準位置設定 */
+        background: #000000;
+        border: 2px solid #555555;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+        box-sizing: border-box;
+    }
+
+    /* 🎀 右上リボン装飾 */
+    .ribbon-deco {
+        position: absolute;
+        top: -5px;
+        right: -25px;
+        width: 100px;
+        height: auto;
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    /* 🤍 右下ワッペン装飾 */
+    .wappen-deco {
+        position: absolute;
+        bottom: -20px;
+        right: -15px;
+        width: 130px;
+        height: auto;
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    /* プロフィール表 */
+    .profile-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .profile-table th, .profile-table td {
+        padding: 8px 4px;
+        border-bottom: 1px dashed #555555;
+        font-size: 0.9em;
+    }
+    .profile-table th {
+        width: 35%;
+        color: #ff8fc5;
+        text-align: left;
+        font-weight: 600;
+    }
+    .profile-table td {
+        color: #ffffff;
+    }
+
+    /* 吹き出し風カード */
+    .speech-card {
+        position: relative;
+        background: #000000;
+        border: 2px solid #555555;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+        box-sizing: border-box;
+        color: #ff8fc5;
+        font-size: 0.9em;
+        line-height: 1.6;
+        letter-spacing: 0.05em;
+    }
+    .speech-card::after {
+        content: '';
+        position: absolute;
+        right: -12px;
+        top: 25px;
+        border-width: 8px 0 8px 12px;
+        border-style: solid;
+        border-color: transparent transparent transparent #555555;
+    }
+
+    /* 右側：自分の立ち絵・アバター画像エリア */
+    .profile-img-container {
+        position: relative; /* アニメーション配置基準位置 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 250px;
+    }
+
+    .pyoko-img {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        display: block;
+        transform-origin: bottom center;
+        animation: pyoko-breath 1.8s steps(1, end) infinite;
+    }
+
+    @keyframes pyoko-breath {
+        0% { transform: scale(1, 1); }
+        50% { transform: scale(0.97, 1.05); }
+        100% { transform: scale(1, 1); }
+    }
+
+    /* ✨ 画像用 点滅アニメーション (♰ / ✧) */
+    .kirakira-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .kirakira {
+        position: absolute;
+        color: #ffffff;
+        font-size: 30px;
+        opacity: 0;
+        animation: kirakira-fade 3.5s infinite ease-in-out;
+    }
+
+    /* 配置場所とアニメーションのタイミング */
+    .kirakira:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; font-size: 18px; }
+    .kirakira:nth-child(2) { top: 20%; right: 10%; animation-delay: 1.2s; }
+    .kirakira:nth-child(3) { top: 55%; left: 5%; animation-delay: 2.0s; }
+    .kirakira:nth-child(4) { top: 75%; right: 12%; animation-delay: 0.6s; font-size: 18px; }
+    .kirakira:nth-child(5) { top: 40%; right: 5%; animation-delay: 2.8s; }
+
+    /* 上下に動かさず、ゆっくり現れて消えるアニメーション */
+    @keyframes kirakira-fade {
+        0% { opacity: 0; }
+        50% { opacity: 0.85; }
+        100% { opacity: 0; }
+    }
+
+    /* 各セクション用コンテナ（幅650px） */
+    .section-container {
+        width: 100%;
+        max-width: 650px;
+        margin-top: 35px;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .section-divider {
+        width: 100%;
+        border-top: 2px dashed #555555;
+        margin-bottom: 25px;
+    }
+
+    .section-container h2 {
+        font-family: 'Jim Nightshade', 'Shippori Mincho', serif;
+        font-size: 2em;
+        margin: 0 auto 25px auto;
+        text-align: center;
+        color: #ff8fc5;
+        background: transparent;
+        border: none;
+        padding: 0;
+    }
+
+    .detail-table tr:last-child th,
+    .detail-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* 詳細コメント欄 */
+    .detail-comment {
+        text-align: left;
+        padding-top: 15px;
+        margin-top: 10px;
+        border-top: 1px dashed #555555;
+        color: #ffffff;
+        font-size: 0.9em;
+        line-height: 1.8;
+        letter-spacing: 0.03em;
+    }
+
+    .detail-comment p {
+        margin: 0;
+    }
+
+    /* 🎵 Image Song 用スタイル */
+    .song-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .song-box {
+        background: #000000;
+        border: 1px dashed #555555;
+        border-radius: 8px;
+        padding: 15px;
+        color: #ffffff;
+        font-size: 0.9em;
+        line-height: 1.6;
+        text-align: left;
+    }
+
+    .song-name {
+        color: #ff8fc5;
+        font-weight: bold;
+    }
+
+    /* ギャラリーエリア（幅650px） */
+    .gallery-card {
+        width: 100%;
+        max-width: 650px;
+        margin-top: 35px;
+        background: transparent;
+        padding: 0;
+        border-radius: 0;
+        box-shadow: none;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    .gallery-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        width: 100%;
+    }
+
+    .gallery-item {
+        width: 100%;
+        max-width: 650px;
+        overflow: hidden;
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 8px;
+    }
+
+    /* 隠しコメントエリア（幅650px） */
+    .secret-comment {
+        width: 100%;
+        max-width: 650px;
+        margin: 50px auto 30px auto;
+        text-align: center;
+        font-size: 0.8em;
+        letter-spacing: 0.1em;
+        box-sizing: border-box;
+    }
+
+    .secret-comment p {
+        color: #1a1a1a; 
+        transition: color 0.5s ease, text-shadow 0.5s ease;
+        cursor: default;
+        user-select: none;
+        margin: 4px 0;
+    }
+
+    .secret-comment p:hover {
+        color: #ff8fc5;
+        text-shadow: 0 0 8px rgba(255, 143, 197, 0.6);
+    }
+
+    /* もどるボタン */
+    .back-btn {
+        display: block;
+        margin: 35px auto 0;
+        max-width: 140px;
+        text-align: center;
+        padding: 8px 15px;
+        background-color: #000000;
+        border: 2px solid #555555;
+        color: #ff8fc5;
+        text-decoration: none;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.85em;
+        transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.2s, border-color 0.2s;
+    }
+    .back-btn:hover {
+        background-color: #ff8fc5;
+        border-color: #ff8fc5;
+        color: #000000;
+        transform: scale(1.08) translateY(-2px);
+    }
+</style>
+</head>
+<body>
+    <div class="site-container">
+
+        <!-- 1. タイトルエリア -->
+        <div class="title-card">
+            <h1>♰ About Persona ♰</h1>
+            <p class="site-desc">
+                ※注意※<br>
+                夢主についての記録と妄想を格納したページです<br>
+            </p>
+        </div>
+
+        <!-- 2. 下部2カラムエリア -->
+        <div class="bottom-columns">
+
+            <!-- 左カラム（プロフ ＋ 吹き出し） -->
+            <div class="left-col">
+                <div class="info-card">
+                    <!-- 🎀 右上リボン画像 -->
+                    <img src="ornament_b.png" class="ribbon-deco" alt="リボン">
+
+                    <table class="profile-table">
+                        <tr>
+                            <th>名前</th>
+                            <td><ruby>萌<rt>はじめ</rt></ruby></td>
+                        </tr>
+                        <tr>
+                            <th>誕生日</th>
+                            <td>10月21日</td>
+                        </tr>
+                        <tr>
+                            <th>好きなもの</th>
+                            <td>一人</td>
+                        </tr>
+                        <tr>
+                            <th>タイプ</th>
+                            <td>半自己投影型</td>
+                        </tr>
+                        <tr>
+                            <th>お相手</th>
+                            <td><ruby>恵美<rt>えみ</rt></ruby> まどか</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="speech-card">
+                    はやく終わりたい…
+                </div>
+            </div>
+
+            <!-- 右カラム（自分の立ち絵・SD画像 ＋ 点滅アニメーション） -->
+            <div class="right-col">
+                <div class="profile-img-container">
+                    <img src="hazime.png" class="pyoko-img" alt="自分のプロフィール画像">
+
+                    <!-- ✨ ♰ / ✧ 点滅アニメーション -->
+                    <div class="kirakira-container">
+                        <span class="kirakira">♰</span>
+                        <span class="kirakira">✧</span>
+                        <span class="kirakira">✧</span>
+                        <span class="kirakira">♰</span>
+                        <span class="kirakira">✧</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 2.5 詳細プロフィールエリア -->
+        <div class="section-container">
+            <div class="section-divider"></div>
+
+            <h2>♱༺𓆩 Detail 𓆪༻♱</h2>
+
+            <div class="info-card">
+                <!-- 🤍 右下ワッペン画像 -->
+                <img src="ornament_a.png" class="wappen-deco" alt="ワッペン">
+
+                <table class="profile-table detail-table">
+                    <tr>
+                        <th>年齢</th>
+                        <td>22歳</td>
+                    </tr>
+                    <tr>
+                        <th>身長</th>
+                        <td>170cm</td>
+                    </tr>
+                    <tr>
+                        <th>血液型</th>
+                        <td>A型</td>
+                    </tr>
+                    <tr>
+                        <th>一人称</th>
+                        <td>僕</td>
+                    </tr>
+                    <tr>
+                        <th>二人称</th>
+                        <td>君</td>
+                    </tr>
+                    <tr>
+                        <th>嫌いなもの</th>
+                        <td>大きい音 / 他人</td>
+                    </tr>
+                    <tr>
+                        <th>性格</th>
+                        <td>陰気 / ぽんこつ</td>
+                    </tr>
+                    <tr>
+                        <th>髪色</th>
+                        <td>黒</td>
+                    </tr>
+                    <tr>
+                        <th>目の色</th>
+                        <td>灰色</td>
+                    </tr>
+                </table>
+
+                <div class="detail-comment">
+                    <p>だいたいいつも希死念慮に苛まれてる。</p>
+                    <p>他人と関わることを極端に嫌う。 人と目を合わせられない。</p>
+                    <p>怒られることが嫌い。 痛いことが嫌い。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🎵 2.6 Image Song エリア（独立カード） -->
+        <div class="section-container">
+            <div class="section-divider"></div>
+
+            <h2>♱༺𓆩 Image Song 𓆪༻♱</h2>
+
+            <div class="info-card love-card">
+                <div class="song-list">
+                    <div class="song-box">
+                        曲名：<span class="song-name">「きみのためのうた」</span> / nyamura × 内緒のピアス<br>
+                        <br>
+                        僕と君が違うことは分かっているけれど…
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. ギャラリーエリア -->
+        <div class="gallery-card">
+            <div class="section-divider"></div>
+
+            <h2>♱༺𓆩 Gallery 𓆪༻♱</h2>
+            <div class="gallery-list">
+                
+                <div class="gallery-item">
+                    <img src="hazime_awaawa.png" alt="自分の作品1">
+                </div>
+
+                <div class="gallery-item">
+                    <img src="hazime_guruguru.png" alt="自分の作品2">
+                </div>
+
+                <div class="gallery-item">
+                    <img src="hazime_love.png" alt="自分の作品3">
+                </div>   
+
+            </div>
+        </div>
+
+        <div class="secret-comment">
+            <p>まどかは2次元のキャラクターであり、現実世界には存在せず、実態を持たない。</p>
+            <p>全てははじめの妄想であり、都合のいい存在。画面を超えてはじめを救済してくれる天使。</p>
+            <p>まどかに虐げられることで、自分の抱える罪悪感や孤独から解放されている。</p>
+            <p>まどかが毒を吐くのは、はじめが自分自身を罰したいという欲求の表れであり、</p>
+            <p>まどかが優しくするのは、はじめが誰よりも愛されたいと切望している表れである。</p>
+        </div>
+
+        <!-- 4. トップへ戻るボタン -->
+        <a href="home.html" class="back-btn">← もどる</a>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <!-- 検索除け（必須！） -->
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Momota's Room</title>
+    
+    <!-- 使うフォント（Hachi Maru Pop） -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
+
+<style>
+    /* 1. ワンクッションページ専用の全体設定 */
+    body {
+        font-family: 'Hachi Maru Pop', cursive, sans-serif;
+        background-color: #000000; /* 黒背景 */
+        color: #ff8fc5;           /* 文字はピンク */
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    /* 2. 注意書きエリア */
+    .gate-container {
+        padding: 20px;
+        max-width: 500px;
+        box-sizing: border-box;
+    }
+
+    .attention-box {
+        font-size: 0.85em;
+        line-height: 1.8;
+        color: #ffffff; /* 注意書きは白文字で真面目に */
+        margin-bottom: 30px;
+    }
+
+    .attention-box strong {
+        color: #ff8fc5; /* 強調したいところだけピンク */
+        font-size: 1.1em;
+    }
+
+    /* 警告枠用スタイル */
+    .content-warning {
+        margin: 15px 0;
+        padding: 10px;
+        border: 1px dashed #ff6699;
+        background: rgba(255, 102, 153, 0.1);
+        border-radius: 8px;
+        color: #ff99bb;
+        font-size: 0.9em;
+    }
+
+    /* 3. Enterリンク（ボタン風） */
+    .enter-btn {
+        display: inline-block;
+        padding: 10px 30px;
+        background-color: transparent;
+        border: 2px solid #ff8fc5;
+        color: #ff8fc5;
+        text-decoration: none;
+        border-radius: 25px;
+        font-weight: bold;
+        font-size: 1em;
+        /* ふわっと変化させる */
+        transition: all 0.3s ease;
+    }
+
+    /* ホバー（カーソルを合わせた時）の設定：色反転 */
+    .enter-btn:hover {
+        background-color: #ff8fc5; /* 背景ピンク */
+        color: #ffffff;             /* 文字白 */
+        transform: scale(1.05);     /* ちょっと大きく */
+    }
+
+    /* 4. 最終更新日 */
+    .last-update {
+        margin-top: 30px;
+        font-size: 0.75em;
+        color: #888888;
+        letter-spacing: 0.05em;
+    }
+</style>
+</head>
+<body>
+
+    <div class="gate-container">
+        <!-- 注意書きエリア -->
+        <div class="attention-box">
+            <p>⋆⋅⋅⋅⊱∘──────∘⊰⋅⋅⋅⋆</p>
+            <p>
+                ここは<strong>桃太</strong>の個人サイトです。<br>
+                某作品の<strong>二次創作・夢創作</strong>を取り扱っております。<br>
+                <br>
+                サイト内の作品はすべてフィクションであり、<br>
+                実在の人物、作品、制作会社、原作者、<br>
+                及びすべての公式関係者様とは一切関係ありません。<br>
+            </p>
+
+            <p>
+                公式関係者様、及び一般の方の閲覧はご遠慮ください。<br>
+                何が起きても責任は負いかねます。<br>
+                <br>
+                （※当サイトは検索除け対策済みです）<br>
+            </p>
+
+            <!-- センシティブ要素に関する注意書き -->
+            <div class="content-warning">
+                ※一部コンテンツにて希死念慮や自傷行為を<br>
+                示唆する表現・独自設定が含まれます。<br>
+                苦手な方は閲覧をお控えください。<br>
+            </div>
+
+            <p>上記をご理解いただける方のみ、<br>Enterよりお進みください。</p>
+            <p>⋆⋅⋅⋅⊱∘──────∘⊰⋅⋅⋅⋆</p>
+        </div>
+
+        <!-- 本サイト（home.html）へのリンク -->
+        <a href="home.html" class="enter-btn">🎀 Enter 🎀</a>
+
+        <!-- 最終更新日 -->
+        <div class="last-update">
+            Final Update : 2026.09.03
+        </div>
+    </div>
+
+</body>
+</html>
