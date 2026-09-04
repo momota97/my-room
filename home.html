@@ -61,6 +61,7 @@
         margin-bottom: 25px;
         text-align: center;
         font-weight: bold;
+        white-space: nowrap; /* marquee内テキストの勝手な改行防止 */
     }
 
     /* 3.5 中央エリア（サイト説明 ＆ about me） */
@@ -86,6 +87,11 @@
         line-height: 1.8;
     }
 
+    /* 単語や区切り単位で折り返したい要素用（文章の途中で不自然に改行されるのを防止） */
+    .nowrap-part {
+        display: inline-block;
+    }
+
     /* about me (About-Me.html) リンクカード */
     .aboutme-link-card {
         display: block;
@@ -99,6 +105,7 @@
         text-decoration: none;
         font-weight: bold;
         font-size: 1.1em;
+        white-space: nowrap; /* ボタン文字の自動改行を防止 */
         transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.2s, color 0.2s;
     }
 
@@ -140,6 +147,7 @@
         border-bottom: 2px dashed #ffb6c1;
         padding-bottom: 5px;
         text-align: center;
+        white-space: nowrap; /* 見出しの勝手な改行を防止 */
     }
 
     /* X（Twitter）テキストの調整 */
@@ -165,6 +173,7 @@
         border-radius: 20px;
         font-weight: bold;
         font-size: 0.85em;
+        white-space: nowrap; /* ボタンテキストの自動改行を防止 */
         transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.2s;
     }
     .link-btn:hover {
@@ -193,6 +202,7 @@
         font-weight: bold;
         font-size: 1.05em;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        white-space: nowrap; /* ボタンの文字改行を防止 */
         transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.2s ease, color 0.2s ease;
         box-sizing: border-box;
     }
@@ -247,6 +257,7 @@
         font-size: 0.8em;
         color: #666;
         line-height: 1.4;
+        white-space: nowrap; /* 更新履歴の日付・内容の改行を防止 */
     }
 
     /* 枠なし推しのこと・浮遊エリア */
@@ -319,7 +330,7 @@
         margin-bottom: 20px;
     }
 
-    /* 🔗 リンク・バナー案内エリア（背景枠なし・横並び） */
+    /* 🔗 リンク・バナー案内エリア（枠なし・横並び） */
     .link-banner-container {
         width: 100%;
         max-width: 650px;
@@ -333,6 +344,7 @@
         color: #ff8fc5;
         margin-bottom: 15px;
         font-weight: bold;
+        white-space: nowrap; /* セクションタイトルの改行を防止 */
     }
 
     /* 左バナー・右テキストの横並びレイアウト */
@@ -388,6 +400,7 @@
         margin-top: 30px;
         font-size: 0.85em;
         opacity: 0.8;
+        white-space: nowrap; /* 勝手な改行を防止 */
     }
 </style>
 
@@ -412,22 +425,22 @@
                 ⋆⋅⋅⋅ Read Me ⋅⋅⋅⋆<br>
                 <br>
                 ここは桃太の個人サイトです。<br>
-                某作品の二次創作 / 夢創作を取り扱っております。<br>
+                <span class="nowrap-part">某作品の二次創作 /</span> <span class="nowrap-part">夢創作を取り扱っております。</span><br>
                 <br>
                 【 傾向と注意 】<br>
                 <br>
                 現在、某作品（hndr）のみを取り扱っております。<br>
                 内容はほぼ、ツバメのお嬢ちゃんに関するものです。<br>
-                固定男夢主の設定を含みます。地雷・苦手な方は自衛をお願いいたします。<br>
+                <span class="nowrap-part">固定男夢主の設定を含みます。</span><span class="nowrap-part">地雷・苦手な方は自衛をお願いいたします。</span><br>
                 <br>
                 ⋆⋅⋅⋅⊱∘──────∘⊰⋅⋅⋅⋆<br>
                 <br>
                 サイト内の作品はすべて桃太の妄想（フィクション）であり、<br>
-                実在の人物、作品、制作会社、原作者、及びすべての公式関係者様とは一切関係ありません。<br>
+                <span class="nowrap-part">実在の人物、作品、制作会社、原作者、</span><span class="nowrap-part">及びすべての公式関係者様とは</span><span class="nowrap-part">一切関係ありません。</span><br>
                 <br>
                 【 禁止事項 】<br>
                 <br>
-                画像・文章の無断転載・使用・お持ち帰り（キャプチャ等含む）は厳禁です。<br>
+                <span class="nowrap-part">画像・文章の無断転載・使用・</span><span class="nowrap-part">お持ち帰り（キャプチャ等含む）は厳禁です。</span><br>
                 共有型ブックマーク（タグ付け）、公共施設からの閲覧。<br>
                 サイトへの誹謗中傷、荒らし行為。<br>
                 <br>
