@@ -333,6 +333,22 @@
             border-color: rgba(255, 254, 255, 0.95) transparent transparent transparent !important;
         }
 
+        /* ★move-topが指定された要素の吹き出しを上に移動 */
+        .photo-item.move-top .speech-bubble {
+            order: -1;
+        }
+
+        /* ★move-top指定時の吹き出し矢印（下向き） */
+        .photo-item.move-top .speech-bubble::after {
+            top: auto !important;
+            bottom: -10px !important;
+            left: 50% !important;
+            right: auto !important;
+            transform: translateX(-50%);
+            border-width: 10px 10px 0 10px !important;
+            border-color: rgba(255, 254, 255, 0.95) transparent transparent transparent !important;
+        }
+
         .photo-item.type-double-with-bubble .speech-bubble {
             width: 100%;
         }
@@ -577,7 +593,8 @@
                      －名探偵 司波仁の事件簿－』<br>
                     発売✨</strong><br>
                     <br>
-                    仁の小説はハンドレの世界観がより濃く感じられて、近未来の雰囲気がすごく<br>
+                    仁の小説はハンドレの世界観がより濃く<br>
+                    感じられて、近未来の雰囲気がすごく<br>
                     良かった！<br>
                     登場人物の中では成沢が一番好き👟<br>
                     <br>
@@ -597,8 +614,8 @@
                 </div>
             </div>
 
-            <!-- 左画像 / 右上吹き出し -->
-            <div class="photo-item type-left">
+            <!-- 左画像 / 右上吹き出し（★move-topを追加して吹き出しを上に配置） -->
+            <div class="photo-item type-left move-top">
                 <div class="photo-wrapper">
                     <img src="20260207_2.jpg" alt="お出かけ写真1">
                 </div>
