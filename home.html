@@ -13,9 +13,13 @@
 
 <style>
     /* 1. 全体の設定（フォントと背景） */
+    *, *::before, *::after {
+        box-sizing: border-box; /* 全要素のサイズ計算を崩れにくく安全に */
+    }
+
     body {
         font-family: 'Hachi Maru Pop', cursive, sans-serif;
-        color: #ff8fc5; /* 文字色は全体的にピンク */
+        color: #ff8fc5;
         margin: 0;
         min-height: 100vh;
         /* 水玉背景 */
@@ -24,12 +28,14 @@
                           radial-gradient(#ffffff 15%, transparent 15%);
         background-position: 0 0, 20px 20px;
         background-size: 40px 40px;
+        overflow-x: hidden; /* 万が一のはみ出しによる横スクロールを絶対防止 */
     }
 
     .site-container {
+        width: 100%;
         max-width: 800px;
         margin: 0 auto;
-        padding: 40px 20px;
+        padding: 40px 15px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -38,20 +44,19 @@
     /* 2. Welcomeエリア */
     .welcome-card {
         background: rgba(255, 254, 255, 0.9);
-        padding: 50px 30px;
+        padding: 40px 20px;
         text-align: center;
         width: 100%;
         max-width: 650px;
         margin-bottom: 25px;
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-        box-sizing: border-box;
     }
 
     .welcome-card h1 {
         margin-top: 0;
-        white-space: nowrap; /* 勝手な改行を防止 */
-        font-size: clamp(1.1em, 5vw, 2.2em); /* スマホ画面で自動リサイズ */
+        white-space: nowrap;
+        font-size: clamp(1.1em, 5vw, 2.2em);
     }
 
     /* 3. 流れるポエム（marquee） */
@@ -61,7 +66,6 @@
         margin-bottom: 25px;
         text-align: center;
         font-weight: bold;
-        white-space: nowrap; /* marquee内テキストの勝手な改行防止 */
     }
 
     /* 3.5 中央エリア（サイト説明 ＆ about me） */
@@ -81,37 +85,34 @@
         text-align: center;
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-        box-sizing: border-box;
         color: #666;
         font-size: 0.9em;
         line-height: 1.8;
-    }
-
-    /* 単語や区切り単位で折り返したい要素用（文章の途中で不自然に改行されるのを防止） */
-    .nowrap-part {
-        display: inline-block;
+        width: 100%;
+        /* 自然な単語単位の改行設定（はみ出し防止） */
+        word-break: keep-all;
+        overflow-wrap: break-word;
     }
 
     /* about me (About-Me.html) リンクカード */
     .aboutme-link-card {
         display: block;
-        background: rgba(255, 254, 255, 0.9); /* 通常時：白い背景 */
-        color: #ff8fc5;                       /* 通常時：ピンク色の文字 */
+        width: 100%;
+        background: rgba(255, 254, 255, 0.9);
+        color: #ff8fc5;
         padding: 20px;
         text-align: center;
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-        box-sizing: border-box;
         text-decoration: none;
         font-weight: bold;
         font-size: 1.1em;
-        white-space: nowrap; /* ボタン文字の自動改行を防止 */
         transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.2s, color 0.2s;
     }
 
     .aboutme-link-card:hover {
-        background-color: #ff8fc5;  /* ホバー時：ピンク背景 */
-        color: #ffffff;             /* ホバー時：白文字 */
+        background-color: #ff8fc5;
+        color: #ffffff;
         transform: scale(1.02) translateY(-2px);
     }
 
@@ -126,6 +127,7 @@
 
     .left-col, .right-col {
         flex: 1;
+        min-width: 0; /* Flex子要素のはみ出し防止 */
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -138,7 +140,7 @@
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         min-height: 100px;
-        box-sizing: border-box;
+        width: 100%;
     }
 
     .info-card h2 {
@@ -147,7 +149,6 @@
         border-bottom: 2px dashed #ffb6c1;
         padding-bottom: 5px;
         text-align: center;
-        white-space: nowrap; /* 見出しの勝手な改行を防止 */
     }
 
     /* X（Twitter）テキストの調整 */
@@ -157,23 +158,26 @@
         line-height: 1.5;
         text-align: left;
         margin: 10px 0;
-        padding-left: 10px;
+        padding-left: 5px;
+        word-break: keep-all;
+        overflow-wrap: break-word;
     }
 
     /* X（Twitter）ボタンの調整 */
     .link-btn {
         display: block;
         margin: 15px auto 0;
+        width: 100%;
         max-width: 140px;
         text-align: center;
-        padding: 8px 15px;
+        padding: 8px 10px;
         background-color: #ff8fc5;
         color: white;
         text-decoration: none;
         border-radius: 20px;
         font-weight: bold;
         font-size: 0.85em;
-        white-space: nowrap; /* ボタンテキストの自動改行を防止 */
+        white-space: nowrap;
         transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.2s;
     }
     .link-btn:hover {
@@ -181,7 +185,7 @@
         transform: scale(1.08) translateY(-2px);
     }
 
-    /* --- ナビゲーションボタンエリア（枠なし・白基調） --- */
+    /* --- ナビゲーションボタンエリア --- */
     .nav-buttons-container {
         display: flex;
         flex-direction: column;
@@ -193,27 +197,28 @@
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        padding: 14px 20px;
+        padding: 14px 15px;
         background: rgba(255, 254, 255, 0.9);
         color: #ff8fc5;
         border: none;
         border-radius: 12px;
         text-decoration: none;
         font-weight: bold;
-        font-size: 1.05em;
+        font-size: clamp(0.85em, 3.5vw, 1.05em); /* スマホ画面で文字サイズを微調整してはみ出し防止 */
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-        white-space: nowrap; /* ボタンの文字改行を防止 */
+        white-space: nowrap;
         transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.2s ease, color 0.2s ease;
-        box-sizing: border-box;
+        width: 100%;
     }
 
     .nav-btn .icon {
         font-size: 1.2em;
-        margin-right: 15px;
+        margin-right: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 24px;
+        width: 20px;
+        flex-shrink: 0;
     }
 
     .nav-btn:hover {
@@ -227,13 +232,10 @@
         max-height: 120px;
         overflow-y: auto;
         padding-right: 5px;
-
-        /* Firefox向けスクロールバー設定 */
         scrollbar-width: thin;
         scrollbar-color: #ffb6c1 #fff0f9;
     }
 
-    /* Webkit（Chrome, Safari, Edge等）向けスクロールバー設定 */
     .history-list::-webkit-scrollbar {
         width: 8px;
     }
@@ -257,7 +259,8 @@
         font-size: 0.8em;
         color: #666;
         line-height: 1.4;
-        white-space: nowrap; /* 更新履歴の日付・内容の改行を防止 */
+        word-break: keep-all;
+        overflow-wrap: break-word;
     }
 
     /* 枠なし推しのこと・浮遊エリア */
@@ -267,11 +270,10 @@
         text-decoration: none;
         text-align: center;
         margin-top: 10px;
-        /* ふよふよ浮遊アニメーション */
+        width: 100%;
         animation: float 4s ease-in-out infinite;
     }
 
-    /* メイン画像（背景枠なし） */
     .oshi-img {
         width: 100%;
         max-width: 320px;
@@ -309,7 +311,6 @@
         animation-delay: -2s;
     }
 
-    /* 🎈 浮遊アニメーション */
     @keyframes float {
         0% { transform: translateY(0px); }
         50% { transform: translateY(-10px); }
@@ -330,13 +331,12 @@
         margin-bottom: 20px;
     }
 
-    /* 🔗 リンク・バナー案内エリア（枠なし・横並び） */
+    /* 🔗 リンク・バナー案内エリア */
     .link-banner-container {
         width: 100%;
         max-width: 650px;
         margin-top: 10px;
         text-align: center;
-        box-sizing: border-box;
     }
 
     .link-banner-title {
@@ -344,10 +344,8 @@
         color: #ff8fc5;
         margin-bottom: 15px;
         font-weight: bold;
-        white-space: nowrap; /* セクションタイトルの改行を防止 */
     }
 
-    /* 左バナー・右テキストの横並びレイアウト */
     .banner-flex-box {
         display: flex;
         align-items: center;
@@ -356,32 +354,36 @@
         text-align: left;
     }
 
-    /* 左側：バナー画像 */
     .banner-img-box img {
         width: 200px;
-        height: 40px;
+        max-width: 100%;
+        height: auto;
         display: block;
         border-radius: 4px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
-    /* 右側：説明テキスト */
     .banner-text {
         color: #666;
         font-size: 0.8em;
         line-height: 1.6;
         margin: 0;
+        word-break: keep-all;
+        overflow-wrap: break-word;
     }
 
-    /* スマホ表示時のサイズ・レイアウト調整 */
+    /* スマホ表示時のレイアウト調整 */
     @media (max-width: 600px) {
+        .bottom-columns {
+            flex-direction: column; /* スマホでは2カラムを縦並びに変えて綺麗に収める */
+        }
+
         .banner-flex-box {
             flex-direction: column;
             text-align: center;
             gap: 12px;
         }
 
-        /* ☁️ スマホ時に雲のサイズを小さく調整 */
         .cloud1 {
             width: 60px;
             left: 0px;
@@ -395,12 +397,11 @@
         }
     }
 
-    /* 最下部ポエム */
     .bottom-poem {
         margin-top: 30px;
         font-size: 0.85em;
         opacity: 0.8;
-        white-space: nowrap; /* 勝手な改行を防止 */
+        text-align: center;
     }
 </style>
 
@@ -425,22 +426,22 @@
                 ⋆⋅⋅⋅ Read Me ⋅⋅⋅⋆<br>
                 <br>
                 ここは桃太の個人サイトです。<br>
-                <span class="nowrap-part">某作品の二次創作 /</span> <span class="nowrap-part">夢創作を取り扱っております。</span><br>
+                某作品の二次創作 / 夢創作を取り扱っております。<br>
                 <br>
                 【 傾向と注意 】<br>
                 <br>
                 現在、某作品（hndr）のみを取り扱っております。<br>
                 内容はほぼ、ツバメのお嬢ちゃんに関するものです。<br>
-                <span class="nowrap-part">固定男夢主の設定を含みます。</span><span class="nowrap-part">地雷・苦手な方は自衛をお願いいたします。</span><br>
+                固定男夢主の設定を含みます。地雷・苦手な方は自衛をお願いいたします。<br>
                 <br>
                 ⋆⋅⋅⋅⊱∘──────∘⊰⋅⋅⋅⋆<br>
                 <br>
                 サイト内の作品はすべて桃太の妄想（フィクション）であり、<br>
-                <span class="nowrap-part">実在の人物、作品、制作会社、原作者、</span><span class="nowrap-part">及びすべての公式関係者様とは</span><span class="nowrap-part">一切関係ありません。</span><br>
+                実在の人物、作品、制作会社、原作者、及びすべての公式関係者様とは一切関係ありません。<br>
                 <br>
                 【 禁止事項 】<br>
                 <br>
-                <span class="nowrap-part">画像・文章の無断転載・使用・</span><span class="nowrap-part">お持ち帰り（キャプチャ等含む）は厳禁です。</span><br>
+                画像・文章の無断転載・使用・お持ち帰り（キャプチャ等含む）は厳禁です。<br>
                 共有型ブックマーク（タグ付け）、公共施設からの閲覧。<br>
                 サイトへの誹謗中傷、荒らし行為。<br>
                 <br>
@@ -474,7 +475,7 @@
                     <a href="https://x.com/momota_ebato97" class="link-btn" target="_blank">のぞいてみる</a>
                 </div>
 
-                <!-- リンクボタンエリア（Photo Log / Bromide Log / About Persona） -->
+                <!-- リンクボタンエリア -->
                 <div class="nav-buttons-container">
                     <a href="Photo-Log.html" class="nav-btn">
                         <span class="icon">📅</span>
@@ -510,7 +511,7 @@
 
         </div>
 
-        <!-- 🔗 リンク・バナー案内エリア（枠なし・横並び） -->
+        <!-- 🔗 リンク・バナー案内エリア -->
         <div class="link-banner-container">
             <div class="section-divider"></div>
             <div class="link-banner-title">.୨୧ Link ୨୧.</div>
