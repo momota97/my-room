@@ -206,9 +206,9 @@
         margin: 0;
     }
 
-    /* 左画像／右上吹き出し（重なり位置のズレ調整） */
+    /* 左画像／右上吹き出し */
     .type-left .speech-bubble {
-        top: 10px;
+        top: 0;
         right: 0;
     }
 
@@ -222,9 +222,9 @@
         border-color: transparent rgba(255, 254, 255, 0.95) transparent transparent;
     }
 
-    /* 右画像／左下吹き出し（重なり位置のズレ調整） */
+    /* 右画像／左下吹き出し（日付との重なりを防ぐため bottom: 0 に修正） */
     .type-right .speech-bubble {
-        bottom: 10px;
+        bottom: 0;
         left: 0;
     }
 
@@ -238,13 +238,13 @@
         border-color: transparent transparent transparent rgba(255, 254, 255, 0.95);
     }
 
-    /* パターン2-2：画像が右、吹き出しが左上 */
+    /* 右画像／左上吹き出し（日付との重なりを防ぐため top: 0 に修正） */
     .photo-item.type-right-top {
         justify-content: flex-end;
     }
 
     .type-right-top .speech-bubble {
-        top: 10px;
+        top: 0;
         left: 0;
     }
 
@@ -304,7 +304,7 @@
             padding: 14px 16px;
         }
 
-        /* スマホ時：基本の吹き出し矢印（画像の下に吹き出しが来るので、矢印は上向き） */
+        /* スマホ時：基本の吹き出し矢印 */
         .type-left .speech-bubble::after,
         .type-right .speech-bubble::after,
         .type-right-top .speech-bubble::after {
@@ -349,20 +349,19 @@
             border-color: rgba(255, 254, 255, 0.95) transparent transparent transparent !important;
         }
 
-        /* ★2026.02.07専用のスマホ順序制御 */
-        .section-20260207 {
-            display: flex;
+        /* ★2026.02.07専用：スマホ表示時のみ順番を入れ替える */
+        .item-20260207-photo1 { order: 2; }
+        .item-20260207-text   { order: 1; }
+        .item-20260207-photo2 { order: 3; }
+
+        /* スマホ時：2026.02.07の吹き出しを画像の上に配置し、矢印を下向きにする */
+        .item-20260207-text {
             flex-direction: column;
-            gap: 15px;
-            width: 100%;
         }
-
-        .section-20260207 .sec-text { order: 1; }
-        .section-20260207 .sec-img1 { order: 2; }
-        .section-20260207 .sec-img2 { order: 3; }
-
-        /* 2026.02.07の吹き出し矢印を画像（下）に向ける設定 */
-        .section-20260207 .sec-text .speech-bubble::after {
+        .item-20260207-text .speech-bubble {
+            order: -1;
+        }
+        .item-20260207-text .speech-bubble::after {
             top: auto !important;
             bottom: -10px !important;
             left: 50% !important;
@@ -630,47 +629,40 @@
                 <span>2026.02.07</span>
             </div>
 
-            <!-- 2026.02.07 の前半エリアグループ -->
-            <div class="section-20260207">
-                <!-- 1. テキストボックス（文章） -->
-                <div class="sec-text">
-                    <div class="speech-bubble">
-                        <p><strong>大型イベント<br>
-                        『2026 HUNDRED NOTE<br>
-                         WINTER FEST<br>
-                         “ネスト山荘の悲劇<br>
-                         ー探偵は雪山に行ってはならぬー“』<br>
-                        開催✨</strong><br>
-                        <br>
-                        全4公演参加しました✨<br>
-                        素敵なイベントありがとう<br>
-                        ございました🙏<br>
-                        <br>
-                        仁とまどか縦並びで幸…<br>
-                        <br>
-                        美人設定の翠と美少女設定のまどかが<br>
-                        マフラーリボンにしてて<br>
-                        最高に解釈一致でtskr🎀</p>
-                    </div>
+            <!-- 画像のみ（1枚目） -->
+            <div class="photo-item type-only item-20260207-photo1">
+                <div class="photo-wrapper">
+                    <img src="20260207.jpg" alt="写真のみ">
                 </div>
+            </div>
 
-                <!-- 2. 画像1枚目（20260207.jpg） -->
-                <div class="photo-item type-only sec-img1">
-                    <div class="photo-wrapper">
-                        <img src="20260207.jpg" alt="写真のみ">
-                    </div>
+            <!-- 左画像 / 右上吹き出し -->
+            <div class="photo-item type-left item-20260207-text">
+                <div class="photo-wrapper">
+                    <img src="20260207_2.jpg" alt="お出かけ写真1">
                 </div>
-
-                <!-- 3. 画像2枚目（20260207_2.jpg） -->
-                <div class="photo-item type-only sec-img2">
-                    <div class="photo-wrapper">
-                        <img src="20260207_2.jpg" alt="お出かけ写真1">
-                    </div>
+                <div class="speech-bubble">
+                    <p><strong>大型イベント<br>
+                    『2026 HUNDRED NOTE<br>
+                     WINTER FEST<br>
+                     “ネスト山荘の悲劇<br>
+                     ー探偵は雪山に行ってはならぬー“』<br>
+                    開催✨</strong><br>
+                    <br>
+                    全4公演参加しました✨<br>
+                    素敵なイベントありがとう<br>
+                    ございました🙏<br>
+                    <br>
+                    仁とまどか縦並びで幸…<br>
+                    <br>
+                    美人設定の翠と美少女設定のまどかが<br>
+                    マフラーリボンにしてて<br>
+                    最高に解釈一致でtskr🎀</p>
                 </div>
             </div>
 
             <!-- 画像2枚横並び -->
-            <div class="photo-item type-double">
+            <div class="photo-item type-double item-20260207-photo2">
                 <div class="photo-wrapper">
                     <img src="20260207_4.jpg" alt="横並び写真1">
                 </div>
@@ -846,7 +838,7 @@
                     開催✨</strong><br>
                     <br>
                     まどかのネコ耳ニット帽<br>
-                    本当にありがとうございます🐾<br>
+                    何度も言いますが本当にありがとうございます🐾<br>
                     かわい～よ～😭<br>
                     普段まどかの露出少なすぎて<br>
                     半袖ですら肌出しすぎ！？と思った。<br>
