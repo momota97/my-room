@@ -279,7 +279,7 @@
         transform: scale(1.08) translateY(-2px);
     }
 
-    /* スマホ表示向けの調整（重なりを防ぎ、画像下へ配置） */
+    /* スマホ表示向けの調整 */
     @media (max-width: 600px) {
         .photo-item.type-left,
         .photo-item.type-right,
@@ -304,7 +304,7 @@
             padding: 14px 16px;
         }
 
-        /* スマホ時の吹き出し矢印（基本は上に配置） */
+        /* スマホ時：基本の吹き出し矢印（画像の下に吹き出しが来るので、矢印は上向き） */
         .type-left .speech-bubble::after,
         .type-right .speech-bubble::after,
         .type-right-top .speech-bubble::after {
@@ -317,15 +317,18 @@
             border-color: transparent transparent rgba(255, 254, 255, 0.95) transparent !important;
         }
 
-        /* 日付冒頭の一番最初の photo-item 内の吹き出しのみ、画像の上に移動 */
-        .photo-log-list > .photo-item:first-of-type .speech-bubble {
+        /* ★日付区切り（.date-divider）の「直後」にある photo-item 内の吹き出しのみ、画像の上に移動 */
+        .date-divider + .photo-item .speech-bubble {
             order: -1;
         }
 
-        /* 日付冒頭の一番最初の吹き出しの矢印（下に配置） */
-        .photo-log-list > .photo-item:first-of-type .speech-bubble::after {
+        /* ★日付直後の吹き出し矢印（画像の上に行くため、矢印は下向き） */
+        .date-divider + .photo-item .speech-bubble::after {
             top: auto !important;
             bottom: -10px !important;
+            left: 50% !important;
+            right: auto !important;
+            transform: translateX(-50%);
             border-width: 10px 10px 0 10px !important;
             border-color: rgba(255, 254, 255, 0.95) transparent transparent transparent !important;
         }
