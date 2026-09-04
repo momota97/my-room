@@ -19,7 +19,7 @@
 
     html, body {
         width: 100%;
-        overflow-x: hidden; /* スマホ時の横スクロールを絶対防止 */
+        overflow-x: hidden; /* スマホ時の横スクロールを防止 */
     }
 
     /* 1. 全体の設定（フォントと背景） */
@@ -61,7 +61,11 @@
     .welcome-card h1 {
         margin-top: 0;
         white-space: nowrap; /* 勝手な改行を防止 */
-        font-size: clamp(1.1em, 5vw, 2.2em); /* スマホ画面で自動リサイズ */
+        font-size: clamp(1.1em, 5vw, 2.2em);
+    }
+
+    .welcome-card p {
+        white-space: nowrap; /* 勝手な改行を防止 */
     }
 
     /* 3. 流れるポエム（marquee） */
@@ -71,6 +75,7 @@
         margin-bottom: 25px;
         text-align: center;
         font-weight: bold;
+        white-space: nowrap; /* 勝手な改行を防止 */
     }
 
     /* 3.5 中央エリア（サイト説明 ＆ about me） */
@@ -98,8 +103,8 @@
     /* about me (About-Me.html) リンクカード */
     .aboutme-link-card {
         display: block;
-        background: rgba(255, 254, 255, 0.9); /* 通常時：白い背景 */
-        color: #ff8fc5;                       /* 通常時：ピンク色の文字 */
+        background: rgba(255, 254, 255, 0.9);
+        color: #ff8fc5;
         padding: 20px;
         text-align: center;
         border-radius: 12px;
@@ -107,13 +112,13 @@
         text-decoration: none;
         font-weight: bold;
         font-size: 1.1em;
-        white-space: nowrap;
+        white-space: nowrap; /* 勝手な改行を防止 */
         transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.2s, color 0.2s;
     }
 
     .aboutme-link-card:hover {
-        background-color: #ff8fc5;  /* ホバー時：ピンク背景 */
-        color: #ffffff;             /* ホバー時：白文字 */
+        background-color: #ff8fc5;
+        color: #ffffff;
         transform: scale(1.02) translateY(-2px);
     }
 
@@ -128,7 +133,7 @@
 
     .left-col, .right-col {
         flex: 1;
-        min-width: 0; /* スマホ時のはみ出しを防止 */
+        min-width: 0;
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -150,7 +155,7 @@
         border-bottom: 2px dashed #ffb6c1;
         padding-bottom: 5px;
         text-align: center;
-        white-space: nowrap;
+        white-space: nowrap; /* 勝手な改行を防止 */
     }
 
     /* X（Twitter）テキストの調整 */
@@ -161,6 +166,7 @@
         text-align: left;
         margin: 10px 0;
         padding-left: 10px;
+        white-space: nowrap; /* 手動の<br>以外での勝手な改行を防止 */
     }
 
     /* X（Twitter）ボタンの調整 */
@@ -177,7 +183,7 @@
         border-radius: 20px;
         font-weight: bold;
         font-size: 0.85em;
-        white-space: nowrap;
+        white-space: nowrap; /* 勝手な改行を防止 */
         transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.2s;
     }
     .link-btn:hover {
@@ -206,7 +212,7 @@
         font-weight: bold;
         font-size: 1.05em;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-        white-space: nowrap;
+        white-space: nowrap; /* ボタンテキストの勝手な改行を防止 */
         width: 100%;
         transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.2s ease, color 0.2s ease;
     }
@@ -232,13 +238,10 @@
         max-height: 120px;
         overflow-y: auto;
         padding-right: 5px;
-
-        /* Firefox向けスクロールバー設定 */
         scrollbar-width: thin;
         scrollbar-color: #ffb6c1 #fff0f9;
     }
 
-    /* Webkit（Chrome, Safari, Edge等）向けスクロールバー設定 */
     .history-list::-webkit-scrollbar {
         width: 8px;
     }
@@ -262,7 +265,7 @@
         font-size: 0.8em;
         color: #666;
         line-height: 1.4;
-        white-space: nowrap;
+        white-space: nowrap; /* 勝手な改行を防止 */
     }
 
     /* 枠なし推しのこと・浮遊エリア */
@@ -273,7 +276,6 @@
         text-align: center;
         margin-top: 10px;
         width: 100%;
-        /* ふよふよ浮遊アニメーション */
         animation: float 4s ease-in-out infinite;
     }
 
@@ -349,7 +351,7 @@
         color: #ff8fc5;
         margin-bottom: 15px;
         font-weight: bold;
-        white-space: nowrap;
+        white-space: nowrap; /* 勝手な改行を防止 */
     }
 
     /* 左バナー・右テキストの横並びレイアウト */
@@ -377,12 +379,17 @@
         font-size: 0.8em;
         line-height: 1.6;
         margin: 0;
+        white-space: nowrap; /* 勝手な改行を防止 */
     }
 
-    /* スマホ表示時のサイズ・レイアウト調整（PC側の表示には一切影響しません） */
+    /* スマホ表示時のサイズ縮小処理（文字・ボタンの自動改行を防ぐ調整） */
     @media (max-width: 600px) {
         .site-container {
             padding: 20px 10px;
+        }
+
+        .welcome-card p {
+            font-size: 0.85em;
         }
 
         .bottom-columns {
@@ -395,12 +402,12 @@
 
         .x-info-text {
             padding-left: 0;
-            font-size: 0.75em;
+            font-size: 0.73em;
         }
 
         .nav-btn {
             padding: 10px 8px;
-            font-size: 0.8em;
+            font-size: 0.78em; /* スマホ画面で改行されないよう文字サイズを最適化 */
         }
 
         .nav-btn .icon {
@@ -413,15 +420,14 @@
         }
 
         .banner-flex-box {
-            flex-direction: flex; /* 横並びを維持 */
             gap: 10px;
         }
 
         .banner-text {
-            font-size: 0.7em;
+            font-size: 0.68em;
         }
 
-        /* ☁️ スマホ時に雲のサイズを小さく調整 */
+        /* ☁️ スマホ時に雲のサイズを調整 */
         .cloud1 {
             width: 50px;
             left: 0px;
@@ -440,7 +446,7 @@
         margin-top: 30px;
         font-size: 0.85em;
         opacity: 0.8;
-        white-space: nowrap;
+        white-space: nowrap; /* 勝手な改行を防止 */
     }
 </style>
 
