@@ -333,6 +333,11 @@
             border-color: rgba(255, 254, 255, 0.95) transparent transparent transparent !important;
         }
 
+        /* ★move-topが指定された要素自体を前の要素（20260207.jpg）より前に移動 */
+        .photo-item.move-top {
+            order: -1;
+        }
+
         /* ★move-topが指定された要素の吹き出しを上に移動 */
         .photo-item.move-top .speech-bubble {
             order: -1;
@@ -614,7 +619,7 @@
                 </div>
             </div>
 
-            <!-- 左画像 / 右上吹き出し（★move-topを追加して吹き出しを上に配置） -->
+            <!-- 左画像 / 右上吹き出し -->
             <div class="photo-item type-left move-top">
                 <div class="photo-wrapper">
                     <img src="20260207_2.jpg" alt="お出かけ写真1">
