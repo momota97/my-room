@@ -333,11 +333,6 @@
             border-color: rgba(255, 254, 255, 0.95) transparent transparent transparent !important;
         }
 
-        /* ★move-topが指定された要素自体を前の要素（20260207.jpg）より前に移動 */
-        .photo-item.move-top {
-            order: -1;
-        }
-
         /* ★move-topが指定された要素の吹き出しを上に移動 */
         .photo-item.move-top .speech-bubble {
             order: -1;
@@ -352,6 +347,17 @@
             transform: translateX(-50%);
             border-width: 10px 10px 0 10px !important;
             border-color: rgba(255, 254, 255, 0.95) transparent transparent transparent !important;
+        }
+
+        /* ★2026.02.07のブロックをスマホ時のみ並び替え */
+        .section-20260207 .item-text-top {
+            order: 1;
+        }
+        .section-20260207 .item-photo-1 {
+            order: 2;
+        }
+        .section-20260207 .item-photo-2 {
+            order: 3;
         }
 
         .photo-item.type-double-with-bubble .speech-bubble {
@@ -613,14 +619,14 @@
             </div>
 
             <!-- 画像のみ（1枚） -->
-            <div class="photo-item type-only">
+            <div class="photo-item type-only section-20260207 item-photo-1">
                 <div class="photo-wrapper">
                     <img src="20260207.jpg" alt="写真のみ">
                 </div>
             </div>
 
             <!-- 左画像 / 右上吹き出し -->
-            <div class="photo-item type-left move-top">
+            <div class="photo-item type-left move-top section-20260207 item-text-top">
                 <div class="photo-wrapper">
                     <img src="20260207_2.jpg" alt="お出かけ写真1">
                 </div>
@@ -645,7 +651,7 @@
             </div>
 
             <!-- 画像2枚横並び -->
-            <div class="photo-item type-double">
+            <div class="photo-item type-double section-20260207 item-photo-2">
                 <div class="photo-wrapper">
                     <img src="20260207_4.jpg" alt="横並び写真1">
                 </div>
