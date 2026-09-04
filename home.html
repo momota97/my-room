@@ -12,9 +12,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
 
 <style>
-    /* 全要素のサイズ指定を安全化 */
+    /* 全要素のサイズ計算設定と安全対策 */
     *, *::before, *::after {
         box-sizing: border-box;
+    }
+
+    html, body {
+        width: 100%;
+        overflow-x: hidden; /* スマホ時の横スクロールを絶対防止 */
     }
 
     /* 1. 全体の設定（フォントと背景） */
@@ -33,6 +38,7 @@
 
     .site-container {
         max-width: 800px;
+        width: 100%;
         margin: 0 auto;
         padding: 40px 20px;
         display: flex;
@@ -65,7 +71,6 @@
         margin-bottom: 25px;
         text-align: center;
         font-weight: bold;
-        white-space: nowrap;
     }
 
     /* 3.5 中央エリア（サイト説明 ＆ about me） */
@@ -102,7 +107,7 @@
         text-decoration: none;
         font-weight: bold;
         font-size: 1.1em;
-        white-space: nowrap; /* 改行防止 */
+        white-space: nowrap;
         transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.2s, color 0.2s;
     }
 
@@ -112,7 +117,7 @@
         transform: scale(1.02) translateY(-2px);
     }
 
-    /* 4. 下部2カラムエリア（Flexbox横並びを固定） */
+    /* 4. 下部2カラムエリア（Flexbox） */
     .bottom-columns {
         display: flex;
         gap: 20px;
@@ -123,7 +128,7 @@
 
     .left-col, .right-col {
         flex: 1;
-        min-width: 0; /* カラム内のはみ出しによる崩れを防止 */
+        min-width: 0; /* スマホ時のはみ出しを防止 */
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -136,6 +141,7 @@
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         min-height: 100px;
+        width: 100%;
     }
 
     .info-card h2 {
@@ -144,7 +150,7 @@
         border-bottom: 2px dashed #ffb6c1;
         padding-bottom: 5px;
         text-align: center;
-        white-space: nowrap; /* 改行防止 */
+        white-space: nowrap;
     }
 
     /* X（Twitter）テキストの調整 */
@@ -162,6 +168,7 @@
         display: block;
         margin: 15px auto 0;
         max-width: 140px;
+        width: 100%;
         text-align: center;
         padding: 8px 15px;
         background-color: #ff8fc5;
@@ -170,7 +177,7 @@
         border-radius: 20px;
         font-weight: bold;
         font-size: 0.85em;
-        white-space: nowrap; /* 改行防止 */
+        white-space: nowrap;
         transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.2s;
     }
     .link-btn:hover {
@@ -178,7 +185,7 @@
         transform: scale(1.08) translateY(-2px);
     }
 
-    /* --- ナビゲーションボタンエリア --- */
+    /* --- ナビゲーションボタンエリア（枠なし・白基調） --- */
     .nav-buttons-container {
         display: flex;
         flex-direction: column;
@@ -199,7 +206,8 @@
         font-weight: bold;
         font-size: 1.05em;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-        white-space: nowrap; /* ボタンテキストの自動改行を防止 */
+        white-space: nowrap;
+        width: 100%;
         transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.2s ease, color 0.2s ease;
     }
 
@@ -254,7 +262,7 @@
         font-size: 0.8em;
         color: #666;
         line-height: 1.4;
-        white-space: nowrap; /* 更新履歴の改行防止 */
+        white-space: nowrap;
     }
 
     /* 枠なし推しのこと・浮遊エリア */
@@ -264,6 +272,7 @@
         text-decoration: none;
         text-align: center;
         margin-top: 10px;
+        width: 100%;
         /* ふよふよ浮遊アニメーション */
         animation: float 4s ease-in-out infinite;
     }
@@ -327,7 +336,7 @@
         margin-bottom: 20px;
     }
 
-    /* 🔗 リンク・バナー案内エリア（枠なし・横並び） */
+    /* 🔗 リンク・バナー案内エリア（背景枠なし・横並び） */
     .link-banner-container {
         width: 100%;
         max-width: 650px;
@@ -340,7 +349,7 @@
         color: #ff8fc5;
         margin-bottom: 15px;
         font-weight: bold;
-        white-space: nowrap; /* 改行防止 */
+        white-space: nowrap;
     }
 
     /* 左バナー・右テキストの横並びレイアウト */
@@ -354,8 +363,9 @@
 
     /* 左側：バナー画像 */
     .banner-img-box img {
-        width: 200px;
-        height: 40px;
+        width: 100%;
+        max-width: 200px;
+        height: auto;
         display: block;
         border-radius: 4px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -369,17 +379,58 @@
         margin: 0;
     }
 
-    /* スマホ表示時の雲のサイズ調整のみ（レイアウトの縦並び化は削除） */
+    /* スマホ表示時のサイズ・レイアウト調整（PC側の表示には一切影響しません） */
     @media (max-width: 600px) {
+        .site-container {
+            padding: 20px 10px;
+        }
+
+        .bottom-columns {
+            gap: 10px;
+        }
+
+        .info-card {
+            padding: 12px 8px;
+        }
+
+        .x-info-text {
+            padding-left: 0;
+            font-size: 0.75em;
+        }
+
+        .nav-btn {
+            padding: 10px 8px;
+            font-size: 0.8em;
+        }
+
+        .nav-btn .icon {
+            margin-right: 6px;
+            width: 18px;
+        }
+
+        .history-list p {
+            font-size: 0.7em;
+        }
+
+        .banner-flex-box {
+            flex-direction: flex; /* 横並びを維持 */
+            gap: 10px;
+        }
+
+        .banner-text {
+            font-size: 0.7em;
+        }
+
+        /* ☁️ スマホ時に雲のサイズを小さく調整 */
         .cloud1 {
-            width: 60px;
+            width: 50px;
             left: 0px;
             bottom: 5px;
         }
 
         .cloud2 {
-            width: 60px;
-            right: 10px;
+            width: 50px;
+            right: 5px;
             top: 0px;
         }
     }
@@ -389,7 +440,7 @@
         margin-top: 30px;
         font-size: 0.85em;
         opacity: 0.8;
-        white-space: nowrap; /* 改行防止 */
+        white-space: nowrap;
     }
 </style>
 
