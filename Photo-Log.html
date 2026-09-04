@@ -304,7 +304,7 @@
             padding: 14px 16px;
         }
 
-        /* スマホ時の吹き出し矢印（上に配置） */
+        /* スマホ時の吹き出し矢印（基本は上に配置） */
         .type-left .speech-bubble::after,
         .type-right .speech-bubble::after,
         .type-right-top .speech-bubble::after {
@@ -315,6 +315,19 @@
             transform: translateX(-50%);
             border-width: 0 10px 10px 10px !important;
             border-color: transparent transparent rgba(255, 254, 255, 0.95) transparent !important;
+        }
+
+        /* 日付冒頭の一番最初の photo-item 内の吹き出しのみ、画像の上に移動 */
+        .photo-log-list > .photo-item:first-of-type .speech-bubble {
+            order: -1;
+        }
+
+        /* 日付冒頭の一番最初の吹き出しの矢印（下に配置） */
+        .photo-log-list > .photo-item:first-of-type .speech-bubble::after {
+            top: auto !important;
+            bottom: -10px !important;
+            border-width: 10px 10px 0 10px !important;
+            border-color: rgba(255, 254, 255, 0.95) transparent transparent transparent !important;
         }
 
         .photo-item.type-double-with-bubble .speech-bubble {
