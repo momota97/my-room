@@ -31,7 +31,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        overflow-x: hidden; /* 右側へのはみ出しによる不要な横スクロールを防ぐ */
+        overflow-x: hidden;
     }
 
     /* 1. タイトルエリア */
@@ -62,7 +62,6 @@
         justify-content: center;
     }
 
-    /* スマホ表示時の設定（縦並びへ変換 & ワッペン調整） */
     @media (max-width: 768px) {
         .bottom-columns {
             flex-direction: column;
@@ -87,7 +86,7 @@
 
     /* 共通カードスタイル */
     .info-card {
-        position: relative; /* 重ねる装飾の基準位置設定 */
+        position: relative;
         background: rgba(255, 254, 255, 0.9);
         padding: 20px;
         border-radius: 12px;
@@ -147,7 +146,7 @@
         border-color: transparent transparent transparent rgba(255, 254, 255, 0.9);
     }
 
-    /* 右側：画像エリア（アニメーション枠） */
+    /* 右側：画像エリア */
     .profile-img-container {
         position: relative;
         display: flex;
@@ -160,7 +159,6 @@
         box-sizing: border-box;
     }
 
-    /* ぴょこぴょこ呼吸する画像 */
     .pyoko-img {
         width: 100%;
         max-width: 300px;
@@ -178,7 +176,6 @@
         100% { transform: scale(1, 1); }
     }
 
-    /* 💗✨ 下から上へ一定スピードで流れるアニメーション要素 */
     .floating-item {
         position: absolute;
         bottom: -20px;
@@ -190,17 +187,14 @@
         animation: float-up 3.5s infinite linear;
     }
 
-    /* 左側ゾーン */
     .f-item1 { left: 3%;  font-size: 1.4em; animation-delay: 0s; }
     .f-item2 { left: 18%; font-size: 1.1em; animation-delay: 1.5s; }
     .f-item3 { left: 8%;  font-size: 1.6em; animation-delay: 2.5s; }
 
-    /* 右側ゾーン */
     .f-item4 { left: 78%; font-size: 1.2em; animation-delay: 0.8s; }
     .f-item5 { left: 90%; font-size: 1.5em; animation-delay: 2.0s; }
     .f-item6 { left: 82%; font-size: 1.0em; animation-delay: 3.1s; }
 
-    /* 一定速度でまっすぐスーッと上昇するアニメーション */
     @keyframes float-up {
         0% {
             transform: translateY(0);
@@ -227,14 +221,12 @@
         box-sizing: border-box;
     }
 
-    /* 上の区切り点線 */
     .section-divider {
         width: 100%;
         border-top: 2px dashed #ff8fc5;
         margin-bottom: 25px;
     }
 
-    /* カプセル風見出し（改行防止・サイズ可変設定） */
     .section-container h2 {
         font-size: clamp(0.95em, 4vw, 1.3em);
         white-space: nowrap;
@@ -252,7 +244,6 @@
         text-align: left;
     }
 
-    /* 🤍 右下ワッペン装飾 */
     .wappen-deco {
         position: absolute;
         bottom: -20px;
@@ -263,7 +254,6 @@
         pointer-events: none;
     }
 
-    /* かわいいポイントのリスト */
     .love-list {
         list-style: none;
         padding: 0;
@@ -291,7 +281,6 @@
         color: #ff8fc5;
     }
 
-    /* フリー語りスペース */
     .love-comment {
         padding-top: 15px;
         border-top: 1px dashed #ffe0ef;
@@ -304,7 +293,6 @@
         margin: 0;
     }
 
-    /* 🎵 イメージソング用スタイル */
     .song-list {
         display: flex;
         flex-direction: column;
@@ -327,7 +315,6 @@
         font-size: 1.05em;
     }
 
-    /* 📺 動画／公式ポスト用スタイル */
     .scene-list {
         display: flex;
         flex-direction: column;
@@ -351,7 +338,6 @@
         gap: 6px;
     }
 
-    /* YouTube埋め込みレスポンシブ枠 */
     .video-responsive {
         position: relative;
         padding-bottom: 56.25%;
@@ -370,38 +356,6 @@
         border: 0;
     }
 
-    /* サムネイル＋リンクカード風スタイル */
-    .thumb-card {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-        text-decoration: none;
-        background: #ffffff;
-        border-radius: 12px;
-        overflow: hidden;
-        border: 1.5px solid #ffe0ef;
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .thumb-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 4px 12px rgba(255, 143, 197, 0.2);
-    }
-
-    .thumb-card img {
-        width: 100%;
-        height: auto;
-        display: block;
-    }
-
-    .thumb-card-text {
-        padding: 10px 12px;
-        color: #ff8fc5;
-        font-size: 0.8em;
-        font-weight: bold;
-        text-align: center;
-    }
-
     .scene-desc {
         margin-top: 10px;
         font-size: 0.8em;
@@ -409,7 +363,6 @@
         line-height: 1.5;
     }
 
-    /* ギャラリー全体コメント枠 */
     .gallery-intro-card {
         background: rgba(255, 254, 255, 0.9);
         border-radius: 12px;
@@ -427,7 +380,6 @@
         margin: 0;
     }
 
-    /* ギャラリー縦並びエリア */
     .gallery-list {
         display: flex;
         flex-direction: column;
@@ -437,11 +389,11 @@
     }
 
     .gallery-item {
+        position: relative;
         width: 100%;
         max-width: 580px;
-        overflow: hidden;
         border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        overflow: visible;
     }
 
     .gallery-item img {
@@ -449,6 +401,94 @@
         height: auto;
         display: block;
         border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    }
+
+    /* 🫧 ギャラリー用・円形吹き出し（isolationプロパティとopacityの一括適用で解法） */
+    .circle-bubble {
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        background: #ffffff; /* 本体色を不透明の完全な白に設定 */
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 20px;
+        box-sizing: border-box;
+        font-size: 0.95em;
+        color: #ff8fc5;
+        font-weight: bold;
+        z-index: 5;
+        line-height: 1.4;
+        
+        /* 重ね合わせテクニック：分離コンテクストの作成 */
+        isolation: isolate;
+        opacity: 0.9; /* 不透明度90%（グループ全体に対して一括適用） */
+        filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.12));
+    }
+
+    /* 1枚目：左下配置＋右上向きしっぽ */
+    .bubble-bottom-left {
+        bottom: -20px;
+        left: -20px;
+    }
+    .bubble-bottom-left::after {
+        content: '';
+        position: absolute;
+        top: 12px;
+        right: 18px;
+        border-style: solid;
+        border-width: 0 10px 18px 10px;
+        border-color: transparent transparent #ffffff transparent; /* しっぽも完全な不透明の白 */
+        transform: rotate(35deg);
+        z-index: -1;
+    }
+
+    /* 2枚目：右下配置＋左上向きしっぽ */
+    .bubble-bottom-right {
+        bottom: -20px;
+        right: -20px;
+    }
+    .bubble-bottom-right::after {
+        content: '';
+        position: absolute;
+        top: 12px;
+        left: 18px;
+        border-style: solid;
+        border-width: 0 10px 18px 10px;
+        border-color: transparent transparent #ffffff transparent; /* しっぽも完全な不透明の白 */
+        transform: rotate(-35deg);
+        z-index: -1;
+    }
+
+    /* スマホ表示時のサイズ調整 */
+    @media (max-width: 600px) {
+        .circle-bubble {
+            width: 135px;
+            height: 135px;
+            font-size: 0.8em;
+            padding: 12px;
+        }
+        .bubble-bottom-left {
+            bottom: -10px;
+            left: -10px;
+        }
+        .bubble-bottom-right {
+            bottom: -10px;
+            right: -10px;
+        }
+        .bubble-bottom-left::after {
+            top: 8px;
+            right: 12px;
+            border-width: 0 7px 14px 7px;
+        }
+        .bubble-bottom-right::after {
+            top: 8px;
+            left: 12px;
+            border-width: 0 7px 14px 7px;
+        }
     }
 
     /* もどるボタン */
@@ -487,7 +527,6 @@
             <div class="left-col">
                 <!-- 推しのプロフ -->
                 <div class="info-card">
-                    <!-- 🎀 右上リボン画像 -->
                     <img src="ornament_2.png" class="ribbon-deco" alt="リボン">
 
                     <table class="profile-table">
@@ -520,15 +559,13 @@
                 </div>
             </div>
 
-            <!-- 右カラム（推しの画像 ＋ 左右から一定速度で昇るアニメーション） -->
+            <!-- 右カラム -->
             <div class="right-col">
                 <div class="profile-img-container">
-                    <!-- 左側のハート＆キラキラ -->
                     <span class="floating-item f-item1">♡</span>
                     <span class="floating-item f-item2">✧</span>
                     <span class="floating-item f-item3">♡</span>
 
-                    <!-- 右側のハート＆キラキラ -->
                     <span class="floating-item f-item4">✧</span>
                     <span class="floating-item f-item5">♡</span>
                     <span class="floating-item f-item6">✧</span>
@@ -539,14 +576,13 @@
 
         </div>
 
-        <!-- 💖 2.5 Cute Point エリア -->
+        <!-- 💖 Cute Point エリア -->
         <div class="section-container">
             <div class="section-divider"></div>
 
             <h2>₊˚✧꒰ Cute Point ꒱✧˚₊</h2>
 
             <div class="info-card love-card">
-                <!-- 🤍 右下ワッペン画像 -->
                 <img src="ornament_1.png" class="wappen-deco" alt="ワッペン">
 
                 <ul class="love-list">
@@ -568,7 +604,7 @@
             </div>
         </div>
 
-        <!-- 🎵 2.6 Image Song エリア（独立カード） -->
+        <!-- 🎵 Image Song エリア -->
         <div class="section-container">
             <div class="section-divider"></div>
 
@@ -597,7 +633,7 @@
             </div>
         </div>
 
-        <!-- 📺 2.7 Check! Cute Scenes エリア（独立カード＋埋め込み動画） -->
+        <!-- 📺 Check! Cute Scenes エリア -->
         <div class="section-container">
             <div class="section-divider"></div>
 
@@ -606,7 +642,6 @@
             <div class="info-card love-card">
                 <div class="scene-list">
 
-                    <!-- シーン1：YouTube動画 -->
                     <div class="scene-item">
                         <div class="scene-title">🎬 YouTubeで見るかわいいまどか ①</div>
                         
@@ -619,7 +654,6 @@
                         </div>
                     </div>
 
-                    <!-- シーン2：YouTube動画 -->
                     <div class="scene-item">
                         <div class="scene-title">🎬 YouTubeで見るかわいいまどか ②</div>
                         
@@ -633,7 +667,6 @@
                         </div>
                     </div>
 
-                    <!-- シーン3：X (Twitter) やその他の画像付きリンク -->
                     <div class="scene-item">
                         <div class="scene-title">💬 公式X (Twitter) のおすすめポスト</div>
                         
@@ -648,7 +681,6 @@
                         </div>
                     </div>
 
-                    <!-- シーン4：X (Twitter) やその他の画像付きリンク -->
                     <div class="scene-item">
                         <div class="scene-title">💬 公式X (Twitter) のおすすめポスト</div>
                         
@@ -673,7 +705,6 @@
 
             <h2>₊˚✧꒰ Gallery ꒱✧˚₊</h2>
 
-            <!-- 💬 タイトルの下・画像の上に置く枠線なしのコメント枠 -->
             <div class="gallery-intro-card">
                 <p>
                     先生の水色ベースの銀髪＋水色の瞳も好きだけど、<br>
@@ -691,11 +722,19 @@
                 <!-- イラスト1枚目 -->
                 <div class="gallery-item">
                     <img src="madoka_nekomimi.png" alt="まどかのイラスト1">
+                    <div class="circle-bubble bubble-bottom-left">
+                        2周年記念POPUP<br>
+                        ビジュアルのまどか<br>
+                    </div>
                 </div>
 
                 <!-- イラスト2枚目 -->
                 <div class="gallery-item">
-                    <img src="madoka_nekomimi2.png" alt="まdoかのイラスト2">
+                    <img src="madoka_nekomimi2.png" alt="まどかのイラスト2">
+                    <div class="circle-bubble bubble-bottom-right">
+                        グラフアート<br>
+                        猫ver.まどか<br>
+                    </div>
                 </div>
 
                 <!-- イラスト3枚目 -->
