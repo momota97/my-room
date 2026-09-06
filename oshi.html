@@ -293,6 +293,41 @@
         margin: 0;
     }
 
+    /* 🎵 Image Song 専用装飾設定 */
+    .imagesong-card {
+        position: relative;
+        overflow: visible;
+    }
+
+    .deco-button-top,
+    .deco-button-bottom,
+    .deco-unicorn {
+        position: absolute;
+        pointer-events: none;
+        z-index: 10;
+    }
+
+    .deco-button-top {
+        top: -5px;
+        right: 50px;
+        width: 35px;
+        height: auto;
+    }
+
+    .deco-button-bottom {
+        top: 50px;
+        right: 10px;
+        width: 35px;
+        height: auto;
+    }
+
+    .deco-unicorn {
+        bottom: -10px;
+        right: -10px;
+        width: 140px;
+        height: auto;
+    }
+
     .song-list {
         display: flex;
         flex-direction: column;
@@ -364,6 +399,8 @@
     }
 
     .gallery-intro-card {
+        position: relative;
+        overflow: visible;
         background: rgba(255, 254, 255, 0.9);
         border-radius: 12px;
         padding: 18px 20px;
@@ -374,6 +411,16 @@
         box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         box-sizing: border-box;
         margin-bottom: 25px;
+    }
+
+    .deco-clip {
+        position: absolute;
+        top: -12px;
+        right: 20px;
+        width: 30px;
+        height: auto;
+        z-index: 10;
+        pointer-events: none;
     }
 
     .gallery-intro-card p {
@@ -409,7 +456,7 @@
         position: absolute;
         width: 180px;
         height: 180px;
-        background: #ffffff; /* 本体色を不透明の完全な白に設定 */
+        background: #ffffff;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -422,14 +469,11 @@
         font-weight: bold;
         z-index: 5;
         line-height: 1.4;
-        
-        /* 重ね合わせテクニック：分離コンテクストの作成 */
         isolation: isolate;
-        opacity: 0.9; /* 不透明度90%（グループ全体に対して一括適用） */
+        opacity: 0.9;
         filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.12));
     }
 
-    /* 1枚目：左下配置＋右上向きしっぽ */
     .bubble-bottom-left {
         bottom: -20px;
         left: -20px;
@@ -441,12 +485,11 @@
         right: 18px;
         border-style: solid;
         border-width: 0 10px 18px 10px;
-        border-color: transparent transparent #ffffff transparent; /* しっぽも完全な不透明の白 */
+        border-color: transparent transparent #ffffff transparent;
         transform: rotate(35deg);
         z-index: -1;
     }
 
-    /* 2枚目：右下配置＋左上向きしっぽ */
     .bubble-bottom-right {
         bottom: -20px;
         right: -20px;
@@ -458,13 +501,33 @@
         left: 18px;
         border-style: solid;
         border-width: 0 10px 18px 10px;
-        border-color: transparent transparent #ffffff transparent; /* しっぽも完全な不透明の白 */
+        border-color: transparent transparent #ffffff transparent;
         transform: rotate(-35deg);
         z-index: -1;
     }
 
     /* スマホ表示時のサイズ調整 */
     @media (max-width: 600px) {
+        .deco-button-top {
+            top: -10px;
+            right: 20px;
+            width: 25px;
+        }
+        .deco-button-bottom {
+            top: 40px;
+            right: -5px;
+            width: 25px;
+        }
+        .deco-unicorn {
+            bottom: -20px;
+            right: -15px;
+            width: 90px;
+        }
+        .deco-clip {
+            top: -10px;
+            right: -5px;
+            width: 24px;
+        }
         .circle-bubble {
             width: 135px;
             height: 135px;
@@ -610,7 +673,12 @@
 
             <h2>₊˚✧꒰ Image Song ꒱✧˚₊</h2>
 
-            <div class="info-card love-card">
+            <div class="info-card love-card imagesong-card">
+                <!-- 🎀 配置素材画像 3点 -->
+                <img src="button_flower.png" class="deco-button-top" alt="ボタン装飾1">
+                <img src="button_normal.png" class="deco-button-bottom" alt="ボタン装飾2">
+                <img src="unicorn.png" class="deco-unicorn" alt="ユニコーン装飾">
+
                 <div class="song-list">
                     <div class="song-box">
                         ♪：<span class="song-name">「ワールドイズマイン」</span> / ryo<br>
@@ -706,6 +774,9 @@
             <h2>₊˚✧꒰ Gallery ꒱✧˚₊</h2>
 
             <div class="gallery-intro-card">
+                <!-- 📎 クリップ画像 -->
+                <img src="clip.png" class="deco-clip" alt="クリップ装飾">
+
                 <p>
                     先生の水色ベースの銀髪＋水色の瞳も好きだけど、<br>
                     公式の灰色(紫色)ベースの銀髪＋紫色の瞳の銀髪も好き…💕<br>
@@ -730,7 +801,7 @@
 
                 <!-- イラスト2枚目 -->
                 <div class="gallery-item">
-                    <img src="madoka_nekomimi2.png" alt="まどかのイラスト2">
+                    <img src="madoka_nekomimi2.png" alt="まdoかのイラスト2">
                     <div class="circle-bubble bubble-bottom-right">
                         グラフアート<br>
                         猫ver.まどか<br>
