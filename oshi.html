@@ -506,11 +506,45 @@
         z-index: -1;
     }
 
+    /* 🪞 鏡の画像設定 */
+    .mirror-wrapper {
+        margin-top: 35px;
+        display: flex;
+        justify-content: center;
+        margin-left: -10px;
+    }
+
+    .mirror-img {
+        width: 100px;
+        height: auto;
+        cursor: pointer;
+        user-select: none;
+        transition: transform 0.2s ease;
+    }
+
+    .mirror-img:hover {
+        transform: scale(1.03);
+    }
+
+    /* 振動キーフレームアニメーション */
+    .shake-anim {
+        animation: shake 0.4s ease-in-out;
+    }
+
+    @keyframes shake {
+        0% { transform: translate(0, 0) rotate(0deg); }
+        20% { transform: translate(-6px, 2px) rotate(-4deg); }
+        40% { transform: translate(6px, -2px) rotate(4deg); }
+        60% { transform: translate(-4px, 1px) rotate(-2deg); }
+        80% { transform: translate(4px, -1px) rotate(2deg); }
+        100% { transform: translate(0, 0) rotate(0deg); }
+    }
+
     /* スマホ表示時のサイズ調整 */
     @media (max-width: 600px) {
         .deco-button-top {
             top: -8px;
-            right: 10px;
+            right: 30px;
             width: 25px;
         }
         .deco-button-bottom {
@@ -552,12 +586,15 @@
             left: 12px;
             border-width: 0 7px 14px 7px;
         }
+        .mirror-img {
+            width: 50px;
+        }
     }
 
     /* もどるボタン */
     .back-btn {
         display: block;
-        margin: 35px auto 0;
+        margin: 20px auto 0;
         max-width: 140px;
         text-align: center;
         padding: 8px 15px;
@@ -820,9 +857,32 @@
             </div>
         </div>
 
-        <!-- 4. もどるボタン -->
+        <!-- 4. 鏡ギミック -->
+        <div class="mirror-wrapper">
+            <img src="mirror_normal.png" id="mirrorImg" class="mirror-img" alt="鏡">
+        </div>
+
+        <!-- 5. もどるボタン -->
         <a href="home.html" class="back-btn">← もどる</a>
 
     </div>
+
+    <script>
+        const mirror = document.getElementById('mirrorImg');
+        
+        mirror.addEventListener('click', function() {
+            if (this.src.includes('mirror_break.png')) return;
+
+            this.classList.add('shake-anim');
+
+            setTimeout(() => {
+                this.src = 'mirror_break.png';
+            }, 180);
+
+            this.addEventListener('animationend', function() {
+                this.classList.remove('shake-anim');
+            }, { once: true });
+        });
+    </script>
 </body>
 </html>
