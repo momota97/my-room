@@ -240,6 +240,12 @@
         color: #ff8fc5;
     }
 
+    /* タイトル位置用親コンテナ */
+    .section-title-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+
     .love-card {
         text-align: left;
     }
@@ -350,6 +356,90 @@
         font-size: 1.05em;
     }
 
+    /* 📺 Check! Cute Scenes 専用カード設定 */
+    .cutescene-card {
+        position: relative;
+        overflow: visible;
+    }
+
+    /* 🧸 カクカク切り替わるキャラアニメーション設定（誠一） */
+    .seiichi-wrapper {
+        position: absolute;
+        width: 110px;
+        height: 110px;
+        pointer-events: none;
+        z-index: 10;
+    }
+
+    /* カード右下配置 */
+    .deco-seiichi-right {
+        bottom: 0px;
+        right: -10px;
+    }
+
+    .seiichi-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        transform-origin: bottom center;
+    }
+
+    /* 表情1：左傾き＋表示（前半） */
+    .seiichi-img.face1 {
+        animation: step-kaku1 1.6s steps(1) infinite;
+    }
+
+    /* 表情2：右傾き＋表示（後半） */
+    .seiichi-img.face2 {
+        animation: step-kaku2 1.6s steps(1) infinite;
+    }
+
+    /* 🐇 カクカク切り替わるキャラアニメーション設定（健三・タイトル左側） */
+    .kenzo-wrapper {
+        position: absolute;
+        width: 130px;
+        height: 130px;
+        pointer-events: none;
+        z-index: 10;
+    }
+
+    /* タイトル見出しの左隣に配置 */
+    .title-kenzo-left {
+        top: -20px;
+        left: -120px;
+    }
+
+    .kenzo-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        transform-origin: bottom center;
+    }
+
+    .kenzo-img.face1 {
+        animation: step-kaku1 1.6s steps(1) infinite;
+    }
+
+    .kenzo-img.face2 {
+        animation: step-kaku2 1.6s steps(1) infinite;
+    }
+
+    @keyframes step-kaku1 {
+        0%   { transform: rotate(-10deg); opacity: 1; }
+        50%  { transform: rotate(0deg); opacity: 0; }
+        100% { transform: rotate(-8deg); opacity: 1; }
+    }
+
+    @keyframes step-kaku2 {
+        0%   { transform: rotate(0deg); opacity: 0; }
+        50%  { transform: rotate(2deg); opacity: 1; }
+        100% { transform: rotate(0deg); opacity: 0; }
+    }
+
     .scene-list {
         display: flex;
         flex-direction: column;
@@ -451,7 +541,7 @@
         box-shadow: 0 4px 15px rgba(0,0,0,0.03);
     }
 
-    /* 🫧 ギャラリー用・円形吹き出し（isolationプロパティとopacityの一括適用で解法） */
+    /* 🫧 ギャラリー用・円形吹き出し */
     .circle-bubble {
         position: absolute;
         width: 180px;
@@ -556,6 +646,22 @@
             bottom: -20px;
             right: -15px;
             width: 70px;
+        }
+        .seiichi-wrapper {
+            width: 70px;
+            height: 70px;
+        }
+        .deco-seiichi-right {
+            bottom: -15px;
+            right: -15px;
+        }
+        .kenzo-wrapper {
+            width: 60px;
+            height: 60px;
+        }
+        .title-kenzo-left {
+            top: -15px;
+            left: -45px;
         }
         .deco-clip {
             top: -10px;
@@ -688,7 +794,7 @@
                 <ul class="love-list">
                     <li><strong>天使みたいな見た目：</strong> 華奢で色白な銀髪銀目！可憐で儚げな美少女にしか見えないのに、実は22歳男性で超毒舌なギャップが最高すぎる…👼 ぴょこんと生えてるアホ毛もかわいい💞</li>
                     <li><strong>圧倒的ぐーたら探偵：</strong> 三度の飯より寝ることが大好きな超・怠け者。斜に構えたワガママなところも愛おしい💤</li>
-                    <li><strong>お世話され上手：</strong> 誠一に小言を言われ怒られつつ甘やかされ、健三には全力で崇め奉られて甘やかされている愛され力…✨ 甘いお菓子🧁と美味しい紅茶☕を飲んですくすく育ってね…💗</li>
+                    <li><strong>お世話され上手：</strong> 誠一に小言を言われ怒られつつ甘やかされ、健三には全力で崇め奉られている愛され力…✨ 甘いお菓子🧁と美味しい紅茶☕を飲んですくすく育ってね…💗</li>
                 </ul>
 
                 <div class="love-comment">
@@ -742,9 +848,25 @@
         <div class="section-container">
             <div class="section-divider"></div>
 
-            <h2>₊˚✧꒰ Check! Cute Scenes ꒱✧˚₊</h2>
+            <!-- タイトル位置用のコンテナ -->
+            <div class="section-title-wrapper">
+                <!-- 🐇 キャラ画像アニメーション（タイトル左側：健三） -->
+                <div class="kenzo-wrapper title-kenzo-left">
+                    <img src="kenzo.png" class="kenzo-img face1" alt="健三表情1">
+                    <img src="kenzo2.png" class="kenzo-img face2" alt="健三表情2">
+                </div>
 
-            <div class="info-card love-card">
+                <h2>₊˚✧꒰ Check! Cute Scenes ꒱✧˚₊</h2>
+            </div>
+
+            <div class="info-card love-card cutescene-card">
+
+                <!-- 🧸 キャラ画像アニメーション（右下：誠一） -->
+                <div class="seiichi-wrapper deco-seiichi-right">
+                    <img src="seiichi.png" class="seiichi-img face1" alt="キャラ表情1">
+                    <img src="seiichi2.png" class="seiichi-img face2" alt="キャラ表情2">
+                </div>
+
                 <div class="scene-list">
 
                     <div class="scene-item">
@@ -767,7 +889,7 @@
                         </div>
 
                         <div class="scene-desc">
-                            「誠一が免許取ったのは僕のためだもんね」って言ってるまどかがかわいい🚗<br>
+                            「誠一が免許取ったのは僕のためだもんね」って言ってるまdoかのかわいい🚗<br>
                             3人が仲良しでによによしてしまう🤭<br>
                         </div>
                     </div>
@@ -838,10 +960,10 @@
 
                 <!-- イラスト2枚目 -->
                 <div class="gallery-item">
-                    <img src="madoka_nekomimi2.png" alt="まdoかのイラスト2">
+                    <img src="madoka_nekomimi2.png" alt="まどかのイラスト2">
                     <div class="circle-bubble bubble-bottom-right">
                         グラフアート<br>
-                        猫ver.まどか<br>
+                        猫ver.まdoか<br>
                     </div>
                 </div>
 
