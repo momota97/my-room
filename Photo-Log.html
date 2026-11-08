@@ -118,7 +118,16 @@
         width: 100%;
     }
 
-    .photo-item.type-double .photo-wrapper {
+    /* 画像6枚（横2×縦3）並び */
+    .photo-item.type-grid-6 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .photo-item.type-double .photo-wrapper,
+    .photo-item.type-grid-6 .photo-wrapper {
         width: 100% !important;
         height: 100%;
         max-width: none !important;
@@ -128,7 +137,8 @@
         aspect-ratio: 1 / 1; 
     }
 
-    .photo-item.type-double .photo-wrapper img {
+    .photo-item.type-double .photo-wrapper img,
+    .photo-item.type-grid-6 .photo-wrapper img {
         width: 100%;
         height: 100%;
         object-fit: contain;
@@ -281,7 +291,6 @@
             gap: 15px;
         }
 
-        /* 2026.02.07の2枚目画像と吹き出し用：スマホでは吹き出しを上にする */
         .photo-item.type-left.item-20260207-sub {
             flex-direction: column-reverse;
         }
@@ -357,25 +366,85 @@
                 </div>
             </div>
 
+            <div class="photo-item type-double-with-bubble">
+                <div class="photo-wrapper" style="width: 100%;">
+                    <img src="20261108_3.jpg" alt="お出かけ写真">
+                </div>
+                <div class="speech-bubble">
+                    まどかがお祝いされてて嬉しい🎉<br>
+                    王冠かわいい👑<br>
+                </div>
+            </div>
+
             <!-- 日付区切り19 -->
             <div class="date-divider">
                 <span>2026.11.07</span>
             </div>
 
-            <div class="photo-item type-left">
+            <div class="photo-item type-right-top">
                 <div class="photo-wrapper">
-                    <img src="20261107.jpg" alt="お出かけ写真1">
+                    <img src="20261107.jpg" alt="お出かけ写真2">
                 </div>
                 <div class="speech-bubble">
                     <p><strong>Animate Girls Festival 2026<br>
                     『ハンドレッドノート』<br>
                     出展✨</strong><br>
+                    <br>
+                    両日参戦🎫<br>
+                    素敵すぎる冊子が配布されてた📕<br>
+                    <br>
+                    誠一の「過去と未来どっちにいく？」とか<br>
+                    まどかの「子どものときの夢は？」の<br>
+                    答えがしんどい…<br>
+                </div>
+            </div>
+
+            <div class="photo-item type-only">
+                <div class="photo-wrapper">
+                    <img src="20261107_2.jpg" alt="写真のみ">
+                </div>
+            </div>
+
+            <!-- 6枚並び（横2×縦3） -->
+            <div class="photo-item type-grid-6">
+                <div class="photo-wrapper">
+                    <img src="20261107_3.jpg" alt="横並び写真1">
+                </div>
+                <div class="photo-wrapper">
+                    <img src="20261107_4.jpg" alt="横並び写真2">
+                </div>
+                <div class="photo-wrapper">
+                    <img src="20261107_5.jpg" alt="横並び写真2">
+                </div>
+                <div class="photo-wrapper">
+                    <img src="20261107_6.jpg" alt="横並び写真2">
+                </div>
+                <div class="photo-wrapper">
+                    <img src="20261107_7.jpg" alt="横並び写真2">
+                </div>
+                <div class="photo-wrapper">
+                    <img src="20261107_8.jpg" alt="横並び写真2">
+                </div>
+            </div>
+
+            <div class="photo-item type-only">
+                <div class="photo-wrapper">
+                    <img src="20261107_9.jpg" alt="写真のみ">
+                </div>
+            </div>
+
+            <div class="photo-item type-double">
+                <div class="photo-wrapper">
+                    <img src="20261107_10.jpg" alt="横並び写真1">
+                </div>
+                <div class="photo-wrapper">
+                    <img src="20261107_11.jpg" alt="横並び写真2">
                 </div>
             </div>
 
             <div class="photo-item type-double-with-bubble">
                 <div class="photo-wrapper" style="width: 100%;">
-                    <img src="20261107_2.jpg" alt="お出かけ写真">
+                    <img src="20261107_12.jpg" alt="お出かけ写真">
                 </div>
                 <div class="speech-bubble">
                     捜査ボードっぽく赤い糸で結ばれててとっても良い☝️<br>
@@ -385,10 +454,10 @@
             <div class="photo-item type-double-with-bubble">
                 <div class="photo-item type-double">
                     <div class="photo-wrapper">
-                        <img src="20261107_3.jpg" alt="横並び写真1">
+                        <img src="20261107_13.jpg" alt="横並び写真1">
                     </div>
                     <div class="photo-wrapper">
-                        <img src="20261107_4.jpg" alt="横並び写真2">
+                        <img src="20261107_14.jpg" alt="横並び写真2">
                     </div>
                 </div>
                 <div class="speech-bubble">
@@ -402,28 +471,28 @@
 
             <div class="photo-item type-only">
                 <div class="photo-wrapper">
-                    <img src="20261107_5.jpg" alt="写真のみ">
+                    <img src="20261107_15.jpg" alt="写真のみ">
                 </div>
             </div>
 
             <div class="photo-item type-double">
                 <div class="photo-wrapper">
-                    <img src="20261107_6.jpg" alt="横並び写真1">
+                    <img src="20261107_16.jpg" alt="横並び写真1">
                 </div>
                 <div class="photo-wrapper">
-                    <img src="20261107_7.jpg" alt="横並び写真2">
+                    <img src="20261107_17.jpg" alt="横並び写真2">
                 </div>
             </div>
 
             <div class="photo-item type-only">
                 <div class="photo-wrapper">
-                    <img src="20261107_8.jpg" alt="写真のみ">
+                    <img src="20261107_18.jpg" alt="写真のみ">
                 </div>
             </div>
 
             <div class="photo-item type-right">
                 <div class="photo-wrapper">
-                    <img src="20261107_9.jpg" alt="お出かけ写真2">
+                    <img src="20261107_19.jpg" alt="お出かけ写真2">
                 </div>
                 <div class="speech-bubble">
                     ⑤の<br>
@@ -440,10 +509,10 @@
 
             <div class="photo-item type-double">
                 <div class="photo-wrapper">
-                    <img src="20261107_10.jpg" alt="横並び写真1">
+                    <img src="20261107_20.jpg" alt="横並び写真1">
                 </div>
                 <div class="photo-wrapper">
-                    <img src="20261107_11.jpg" alt="横並び写真2">
+                    <img src="20261107_21.jpg" alt="横並び写真2">
                 </div>
             </div>
 
@@ -729,14 +798,12 @@
                 <span>2026.02.07</span>
             </div>
 
-            <!-- ① PC: 1番目上 / スマホ: 3番目下 (20260207.jpg) -->
             <div class="photo-item type-only">
                 <div class="photo-wrapper">
                     <img src="20260207.jpg" alt="お出かけ写真1">
                 </div>
             </div>
 
-            <!-- ② PC: 2番目下（左に画像、右にテキスト） / スマホ: テキストが上(1番目)、画像が下(2番目) -->
             <div class="photo-item type-left item-20260207-sub">
                 <div class="photo-wrapper">
                     <img src="20260207_2.jpg" alt="写真2">
